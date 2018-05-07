@@ -9,6 +9,7 @@ public class s {
 
 	public static void main(String[] args) {
 		System.out.println("BONJOUR");
+		System.out.println("BONJOUR 2");
 	}
 
 }
