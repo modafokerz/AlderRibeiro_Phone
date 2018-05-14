@@ -37,20 +37,20 @@ public class BaseFrame extends JFrame {
 		// Paramètres de base de la JFrame
 		setVisible(true);
 		setSize(600,800);
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(null); //mettre la fenêtre au milieu de l'écran.
 		
 		// Heure + Date dans les label + gère la batterie
-		Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		Calendar cal = Calendar.getInstance(); //lib. java qui prend l'instance date de l'ordi
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm"); //formatage
         currentHour.setText(sdf.format(cal.getTime()));
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = new Date();
         currentDate.setText(dateFormat.format(date));
 		
+        //Pour récupérer la batterie de l'ordinateur
         Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
         Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
         batteryLife.setText("Power : " +batteryStatus.getBatteryLifePercent());

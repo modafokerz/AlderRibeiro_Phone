@@ -31,7 +31,7 @@ public class KeyboardButton extends JButton {
 		setFont(new Font("Tahoma", Font.BOLD, 30));
 		setForeground(Color.WHITE);
 		setBackground(Color.darkGray);
-		setBorder(new LineBorder(Color.darkGray, 0));
+		setBorder(new LineBorder(Color.darkGray, 0)); //pour supprimer les bords du clavier
 		
 		addMouseListener(new MouseAdapter() {
             
