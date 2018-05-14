@@ -35,7 +35,7 @@ public class PinScreen extends BaseFrame {
 		this.remove(centerPanel);
 		setBackground(Color.WHITE);
 		// Gère le top Panel comprenant le texte
-		topText.setPreferredSize(new Dimension(600, 100));
+		topText.setPreferredSize(new Dimension(600, 100)); //Taille du composant (taille du JLabel)
 		topText.setHorizontalAlignment(SwingConstants.CENTER);
 		topText.setVerticalAlignment(SwingConstants.TOP);
 		topText.setBackground(Color.WHITE);

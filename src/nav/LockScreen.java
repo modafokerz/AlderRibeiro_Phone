@@ -68,7 +68,7 @@ public class LockScreen extends BaseFrame {
         
         unlockButton.addMouseListener(new MouseAdapter() {
             
-            public void mouseEntered(MouseEvent me) {
+            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
             	
             	unlockButton.setContentAreaFilled(true);
             	unlockButton.setOpaque(true);
@@ -77,7 +77,7 @@ public class LockScreen extends BaseFrame {
             	
             	
             }
-            public void mouseExited(MouseEvent me) {
+            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
             	unlockButton.setBorder(new LineBorder(Color.WHITE, 3));
             	unlockButton.setContentAreaFilled(false);
                 unlockButton.setOpaque(false);
@@ -114,6 +114,7 @@ public class LockScreen extends BaseFrame {
         centerPanel.add(bottomPanel);
 	}
 	
+	//refresh l'heure toutes les secondes depuis le main
 	public void updateSeconds() {
 		Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(" HH mm : ss");
