@@ -37,7 +37,6 @@ public class BaseFrame extends JFrame {
 		// Paramètres de base de la JFrame
 		setVisible(true);
 		setSize(600,800);
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -53,7 +52,7 @@ public class BaseFrame extends JFrame {
 		
         Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
         Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
-        batteryLife.setText("Power : " +batteryStatus.getBatteryLifePercent());
+        batteryLife.setText("Power : " + batteryStatus.getBatteryLifePercent());
         
 		// Panel du top (Operateur, Heure, Date)
         topPanel.setVisible(true);

@@ -53,9 +53,7 @@ public class LockScreen extends BaseFrame {
         bottomPanel.add(new JLabel());
         bottomPanel.add(new JLabel());
         bottomPanel.add(new JLabel());
-        
-        
-        
+
         bottomPanel.add(unlockButton);
         bottomPanel.add(new JLabel());
         bottomPanel.add(new JLabel());
