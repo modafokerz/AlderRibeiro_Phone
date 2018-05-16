@@ -1,14 +1,24 @@
 package nav;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import components.KeyboardButton;
 
@@ -22,13 +32,13 @@ import components.KeyboardButton;
 @SuppressWarnings("serial")
 public class PinScreen extends BaseFrame {
 	private String text = "";
-	private JLabel topText = new JLabel("Insérez le code PIN");
+	private JLabel topText = new JLabel("Insérez votre code");
 	private JPanel topTextPanel = new JPanel();
 	private JPanel pinPanel = new JPanel();
 	private JLabel pinEntered = new JLabel();
 
 	private JPanel keyboard = new JPanel();
-	private JButton returnButton = new JButton("Return");
+	private JButton returnButton = new JButton("RETOUR");
 
 	public PinScreen() {
 		super();
@@ -42,7 +52,7 @@ public class PinScreen extends BaseFrame {
 		topText.setFont(new Font("Arial Black", Font.PLAIN, 45));
 		topTextPanel.add(topText,BorderLayout.CENTER);
 		topTextPanel.setBackground(Color.white);
-
+		
 		pinPanel.add(topTextPanel,BorderLayout.NORTH);
 		pinPanel.setBackground(Color.WHITE);
 		pinPanel.add(pinEntered,BorderLayout.CENTER);
@@ -53,14 +63,112 @@ public class PinScreen extends BaseFrame {
 		pinEntered.setPreferredSize(new Dimension(600,100));
 		pinEntered.setText(text);
 
+		
+		// Gère le keyboard afin de pouvoir entrer le code
 		keyboard.setBackground(Color.darkGray);
 		keyboard.setLayout(new GridLayout(4,3));
-		keyboard.setPreferredSize(new Dimension(600,500));
+		keyboard.setPreferredSize(new Dimension(600,450));
 		
+		// Gère les bouton pour effacer dernier caractère entré et valider
 		KeyboardButton erase = new KeyboardButton("", this);
 		KeyboardButton validate = new KeyboardButton("", this);
 		
 		
+		
+		// Icones des boutons
+		
+		
+		  try {
+		    Image img = ImageIO.read(new File("img/delete-icon2.png"));
+		    erase.setIcon(new ImageIcon(img));
+		    
+		    Image img2 = ImageIO.read(new File("img/validate-icon2.png"));
+		    validate.setIcon(new ImageIcon(img2));
+		  } catch (Exception ex) {
+		    System.out.println(ex);
+		  }
+		  
+		  erase.addMouseListener(new MouseAdapter() {
+	            
+	            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
+	            	try {
+	        		    Image img = ImageIO.read(new File("img/delete-icon.png"));
+	        		    erase.setIcon(new ImageIcon(img));
+	        		    
+	        		  } catch (Exception ex) {
+	        		    System.out.println(ex);
+	        		  }
+	            }
+	            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
+
+	            	try {
+	        		    Image img = ImageIO.read(new File("img/delete-icon2.png"));
+	        		    erase.setIcon(new ImageIcon(img));
+	        		    
+	        		  } catch (Exception ex) {
+	        		    System.out.println(ex);
+	        		  }
+	        		
+	            }
+	         });
+		  
+		  validate.addMouseListener(new MouseAdapter() {
+	            
+	            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
+	            	try {
+	        		    Image img = ImageIO.read(new File("img/validate-icon.png"));
+	        		    validate.setIcon(new ImageIcon(img));
+	        		    
+	        		  } catch (Exception ex) {
+	        		    System.out.println(ex);
+	        		  }
+	            }
+	            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
+
+	            	try {
+	        		    Image img = ImageIO.read(new File("img/validate-icon2.png"));
+	        		    validate.setIcon(new ImageIcon(img));
+	        		    
+	        		  } catch (Exception ex) {
+	        		    System.out.println(ex);
+	        		  }
+	        		
+	            }
+	         });
+		  
+		
+		// supprime les action listener des boutons (ceux dont ils ont hérité)
+		for( ActionListener al : erase.getActionListeners() ) {
+	        erase.removeActionListener( al );
+	    }
+		
+		for( ActionListener al : validate.getActionListeners() ) {
+	        validate.removeActionListener( al );
+	    }
+		
+		
+		// crée les nouveaux action listener et les ajoute au bouton
+		erase.addActionListener(new ActionListener()
+        {
+      	  public void actionPerformed(ActionEvent e)
+      	  {
+      	    
+      		eraseLastCarac();
+
+      	  }
+      	});
+		
+		validate.addActionListener(new ActionListener()
+        {
+	      	  public void actionPerformed(ActionEvent e)
+	      	  {
+	      	    
+	      		verifyCodeEntered();
+
+	      	  }
+	      	});
+		
+		keyboard.setBorder(new LineBorder(Color.WHITE, 3));
 		keyboard.add(new KeyboardButton("1", this));
 		keyboard.add(new KeyboardButton("2", this));
 		keyboard.add(new KeyboardButton("3", this));
@@ -74,15 +182,65 @@ public class PinScreen extends BaseFrame {
 		keyboard.add(new KeyboardButton("0", this));
 		keyboard.add(validate);
 		
+		
+		
+		// apparance bouton du bas + action
+		returnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		returnButton.setHorizontalAlignment(SwingConstants.CENTER);
+		returnButton.setContentAreaFilled(false);
+		returnButton.setOpaque(true);
+		returnButton.setFont(new Font("Helvetica", Font.BOLD, 17));
+		returnButton.setBackground(Color.white);
+		returnButton.setForeground(Color.darkGray);
+        returnButton.setPreferredSize(new Dimension(600,80));
+        returnButton.setBorderPainted(false);
+        
+		returnButton.addMouseListener(new MouseAdapter() {
+            
+            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
+            	
+            	returnButton.setBorderPainted(true);
+            	returnButton.setBorder(new LineBorder(Color.DARK_GRAY, 5));
+            }
+            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
+
+            	returnButton.setBackground(Color.white);
+            	returnButton.setBorderPainted(false);
+        		
+            }
+         });
+        
+		returnButton.addActionListener(new ActionListener()
+        {
+        	  public void actionPerformed(ActionEvent e)
+        	  {
+        	    
+        		new LockScreen();
+				PinScreen.this.dispose();
+
+        	  }
+        	});
+		
+		// Layouts
 		pinPanel.add(keyboard,BorderLayout.CENTER);
 		add(returnButton, BorderLayout.SOUTH);
 		add(pinPanel,BorderLayout.CENTER);
 
 	}
 
+	protected void verifyCodeEntered() {
+		if (pinEntered.getText().equals("0000")) {
+			dispose();
+			new HomeScreen();
+		} else {
+			topText.setText("CODE INVALIDE !");
+		}
+		
+	}
+
 	public void updateText(String str) {
 
-		if (pinEntered.getText().length() < 6) {
+		if (pinEntered.getText().length() < 4) {
 			switch(str) {
 			case "1": text+="1";
 			break;
@@ -107,19 +265,21 @@ public class PinScreen extends BaseFrame {
 			}
 			
 			pinEntered.setText(text);
-			System.out.println(pinEntered.getText());
-		} else {
-			if(pinEntered.getText().equals("0000")) {
-				this.topText.setText("PIN correct");
-				this.pinEntered.setText("");
-				text="";
-			} else {
-				this.topText.setText("PIN Incorrect !");
-				this.pinEntered.setText("");
-				text="";
-			}
-		}
+
+		} 
 		
+		
+	}
+	
+	protected void eraseLastCarac() {
+		String actualPin = pinEntered.getText();
+		String updatedText ="";
+		
+		if (actualPin.length()!=0)
+			updatedText = actualPin.substring(0, actualPin.length()-1);
+		
+		pinEntered.setText(updatedText);
+		text = updatedText;
 	}
 
 }

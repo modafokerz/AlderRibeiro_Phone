@@ -1,5 +1,6 @@
 package components;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
 
 import nav.PinScreen;
 
@@ -31,8 +31,8 @@ public class KeyboardButton extends JButton {
 		setFont(new Font("Tahoma", Font.BOLD, 30));
 		setForeground(Color.WHITE);
 		setBackground(Color.darkGray);
-		setBorder(new LineBorder(Color.darkGray, 0)); //pour supprimer les bords du clavier
-		
+		setBorderPainted(false); //pour supprimer les bords du clavier
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		addMouseListener(new MouseAdapter() {
             
             public void mouseEntered(MouseEvent me) {
