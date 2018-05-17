@@ -28,7 +28,7 @@ public class BaseFrame extends JFrame {
 	// Le panel du centre et ses composants
 	protected BackgroundPanel centerPanel = new BackgroundPanel();
 	
-	
+	public static Color baseColor = new Color(0, 0, 0, 10);
 
 
 	
@@ -57,7 +57,7 @@ public class BaseFrame extends JFrame {
         
 		// Panel du top (Operateur, Heure, Date)
         topPanel.setVisible(true);
-        topPanel.setBackground(new Color(0, 0, 0, 10));
+        topPanel.setBackground(baseColor);
         
         // -- Gère l'alignement de manière à ce que l'heure soit toujours au milieu de l'écran,
         //    L'opérateur à gauche et la date à droite
