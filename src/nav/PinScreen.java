@@ -194,7 +194,7 @@ public class PinScreen extends BaseFrame {
 		returnButton.setForeground(Color.darkGray);
         returnButton.setPreferredSize(new Dimension(600,80));
         returnButton.setBorderPainted(false);
-        
+        returnButton.setFocusPainted(false);
 		returnButton.addMouseListener(new MouseAdapter() {
             
             public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur

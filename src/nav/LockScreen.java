@@ -104,7 +104,7 @@ public class LockScreen extends BaseFrame {
         
         unlockButton.setFont(new Font("Helvetica", Font.BOLD, 17));
         unlockButton.setForeground(Color.WHITE);
-        
+        unlockButton.setFocusPainted(false);
         
         bottomPanel.setOpaque(false);
         

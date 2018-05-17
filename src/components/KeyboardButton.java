@@ -28,6 +28,7 @@ public class KeyboardButton extends JButton {
 	}
 	
 	private void construction() {
+		setFocusPainted(false);
 		setFont(new Font("Tahoma", Font.BOLD, 30));
 		setForeground(Color.WHITE);
 		setBackground(Color.darkGray);
