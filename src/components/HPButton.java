@@ -16,8 +16,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import nav.BaseFrame;
-
+@SuppressWarnings("serial")
 public class HPButton extends JButton {
 	public HPButton() {
 		construction();
@@ -34,26 +33,34 @@ public class HPButton extends JButton {
 		setHorizontalAlignment(SwingConstants.CENTER);
 
 		setBorder(new LineBorder(Color.black, 3));
-		setForeground(Color.black);
-		setBackground(BaseFrame.baseColor);
-		
+ 		setForeground(Color.black);
+ 		setBackground(Color.darkGray);
+		setOpaque(false);
+		setContentAreaFilled(false);
 		
 		// Ajoute l'action au hover du bouton
 		addMouseListener(new MouseAdapter() {
             
-            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
-            	
-            	
-            	setBackground(Color.black);
-            	setForeground(BaseFrame.baseColor);
-            	setBorder(new LineBorder(BaseFrame.baseColor, 3));
-            	
-            }
-            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet à l'état précédent
-            	setBorder(new LineBorder(Color.black, 3));
-        		setForeground(Color.black);
-        		setBackground(BaseFrame.baseColor);
-            }
+			 public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
+	            	
+	            	setContentAreaFilled(true);
+	            	setOpaque(true);
+	            	setBorder(new LineBorder(Color.white, 3));
+	        		setForeground(Color.white);
+	        		setBackground(Color.black);
+	            	
+	            	
+	            }
+	            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
+	            	
+	            	setContentAreaFilled(false);
+	                setOpaque(false);
+	                setBorder(new LineBorder(Color.black, 3));
+	        		setForeground(Color.black);
+	        		setBackground(Color.darkGray);
+	  
+	            	
+	            }
          });
 	}
 }

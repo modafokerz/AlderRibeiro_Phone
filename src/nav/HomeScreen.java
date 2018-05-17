@@ -6,25 +6,27 @@
 */
 package nav;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
+import java.awt.GridLayout;
 import javax.swing.JButton;
 
-import components.HomeBottomPanel;
 
 @SuppressWarnings("serial")
-public class HomeScreen extends BaseFrame {
+public class HomeScreen extends AppBaseFrame {
 	
-	HomeBottomPanel bp = new HomeBottomPanel();
+	
+	
 	
 	public HomeScreen () {
 		
-		centerPanel.setLayout(new GridLayout(3,4));
-		for(int i = 0; i < 12; i++)
+		centerPanel.setLayout(new GridLayout(6,4));
+		
+		
+		
+		for(int i = 0; i < 24; i++)
 			centerPanel.add(new JButton());
 		
-		add(bp,BorderLayout.SOUTH);
+		
 	}
 	
 	
