@@ -79,10 +79,10 @@ public class PinScreen extends BaseFrame {
 		
 		
 		  try {
-		    Image img = ImageIO.read(new File("img/delete-icon2.png"));
+		    Image img = ImageIO.read(new File("img/icons/delete-icon2.png"));
 		    erase.setIcon(new ImageIcon(img));
 		    
-		    Image img2 = ImageIO.read(new File("img/validate-icon2.png"));
+		    Image img2 = ImageIO.read(new File("img/icons/validate-icon2.png"));
 		    validate.setIcon(new ImageIcon(img2));
 		  } catch (Exception ex) {
 		    System.out.println(ex);
@@ -92,7 +92,7 @@ public class PinScreen extends BaseFrame {
 	            
 	            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
 	            	try {
-	        		    Image img = ImageIO.read(new File("img/delete-icon.png"));
+	        		    Image img = ImageIO.read(new File("img/icons/delete-icon.png"));
 	        		    erase.setIcon(new ImageIcon(img));
 	        		    
 	        		  } catch (Exception ex) {
@@ -102,7 +102,7 @@ public class PinScreen extends BaseFrame {
 	            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
 
 	            	try {
-	        		    Image img = ImageIO.read(new File("img/delete-icon2.png"));
+	        		    Image img = ImageIO.read(new File("img/icons/delete-icon2.png"));
 	        		    erase.setIcon(new ImageIcon(img));
 	        		    
 	        		  } catch (Exception ex) {
@@ -116,7 +116,7 @@ public class PinScreen extends BaseFrame {
 	            
 	            public void mouseEntered(MouseEvent me) { //quand la souris passe sur le bouton, change couleur
 	            	try {
-	        		    Image img = ImageIO.read(new File("img/validate-icon.png"));
+	        		    Image img = ImageIO.read(new File("img/icons/validate-icon.png"));
 	        		    validate.setIcon(new ImageIcon(img));
 	        		    
 	        		  } catch (Exception ex) {
@@ -126,7 +126,7 @@ public class PinScreen extends BaseFrame {
 	            public void mouseExited(MouseEvent me) { //quand la souris sors du bouton, remet normal.
 
 	            	try {
-	        		    Image img = ImageIO.read(new File("img/validate-icon2.png"));
+	        		    Image img = ImageIO.read(new File("img/icons/validate-icon2.png"));
 	        		    validate.setIcon(new ImageIcon(img));
 	        		    
 	        		  } catch (Exception ex) {

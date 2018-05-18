@@ -11,8 +11,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -26,7 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 
-import nav.HomeScreen;
+
 
 @SuppressWarnings("serial")
 public class HPButton extends JButton {
@@ -48,7 +47,7 @@ public class HPButton extends JButton {
 		
 		
 		try {
-			Image img = ImageIO.read(new File("img/home-icon.png"));
+			Image img = ImageIO.read(new File("img/icons/home-icon.png"));
 			setIcon(new ImageIcon(img));
 		} catch (IOException e) {
 			e.printStackTrace();
