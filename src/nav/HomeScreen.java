@@ -10,6 +10,8 @@ package nav;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.imageio.ImageIO;
@@ -71,6 +73,14 @@ public class HomeScreen extends AppBaseFrame {
 		    System.out.println(ex);
 		  }
 		
+		weatherIcon.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new WeatherApp();
+			}
+			
+		});
 		newCenterPanel.add(weatherIcon);
 		
 		// Icone de calculatrice
