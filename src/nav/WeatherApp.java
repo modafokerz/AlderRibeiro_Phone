@@ -13,11 +13,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONObject;
+
 
 
 public class WeatherApp extends AppBaseFrame {
-	JSONObject weatherData;
+	
 
 	public WeatherApp() {
 		
@@ -41,7 +41,7 @@ public class WeatherApp extends AppBaseFrame {
 			while ((output = br.readLine()) != null) {
 				System.out.println(output);
 			}
-			weatherData = new JSONObject(output);
+			
 			conn.disconnect();
 
 		} catch (MalformedURLException e) {
