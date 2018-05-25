@@ -15,6 +15,7 @@ public class AppBaseFrame extends BaseFrame {
 	private HomeBottomPanel bp = new HomeBottomPanel();
 	
 	public AppBaseFrame() {
+		super();
 		add(bp,BorderLayout.SOUTH);
 		
 		

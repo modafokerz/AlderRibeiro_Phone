@@ -7,83 +7,68 @@
 package nav;
 
 import java.awt.BorderLayout;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javax.swing.JPanel;
 
-import objects.WeatherData;
+import com.teknikindustries.yahooweather.WeatherDisplay;
+import com.teknikindustries.yahooweather.WeatherDoc;
+
+import net.aksingh.owmjapis.api.APIException;
+import net.aksingh.owmjapis.core.OWM;
+import net.aksingh.owmjapis.model.CurrentWeather;
+
 
 
 
 
 public class WeatherApp extends AppBaseFrame {
 	
-	private String ville = "sierre";
 	
-	private String sierreVille = "sierre";
-	private String aigleVille = "aigle-vd";
-	private String sionVille = "sion-vs";
+	private String ville = "Sierre";
 	
-	private WeatherData weatherData;
 	
 	private JPanel weatherAppPanel = new JPanel();
 	private JPanel topAppPanel = new JPanel();
 	
 	public WeatherApp() {
-		
-		getAPIinfo();
+		super();
+		getAPIinfo(ville);
 		remove(centerPanel);
 		add(weatherAppPanel, BorderLayout.CENTER);
 		weatherAppPanel.setSize(600, 650);
+		
+		// Top App Weather Panel construction !
+		topAppPanel.setSize(600,350);
+		
 		weatherAppPanel.add(topAppPanel);
 		
 	}
 	
-	private void getAPIinfo() {
-		
-				// HTTP Request qui prend les infos météo de Sierre sur météo suisse
-				try {
-					URL url = new URL("http://www.prevision-meteo.ch/services/json/" + ville);
-					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-					conn.setRequestMethod("GET");
-					
-					// Erreur 200, indique que le GET n'as pas pu être établi
-					if (conn.getResponseCode() != 200) {
-						throw new RuntimeException("Erreur code HTTP (réponse) : "
-								+ conn.getResponseCode());
-					}
+	private void getAPIinfo(String str) 
+	{
 
-					BufferedReader br = new BufferedReader(new InputStreamReader(
-							(conn.getInputStream())));
+        // OpenWeatherMap object avec ma clé API
+        OWM owm = new OWM("49f3502e61b9c40f4389aa6443c960de");
 
-					String output;
-					System.out.println("-- Infos Prévisions Météo --");
-					while ((output = br.readLine()) != null) {
-						System.out.println(output);
-					}
-					
-					
-					weatherData = new WeatherData(output);
-					conn.disconnect();
-					weatherAppConstruction();
-					
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+        // getting current weather data 
+        CurrentWeather cwd = null;
+		try {
+			cwd = owm.currentWeatherByCityName("London");
+		} catch (APIException e) {
+			e.printStackTrace();
+		}
+
+        //printing city name from the retrieved data
+        System.out.println("City: " + cwd.getCityName());
+
+        // printing the max./min. temperature
+        System.out.println("Temperature: " + cwd.getMainData().getTempMax()
+                            + "/" + cwd.getMainData().getTempMin() + "\'K");
+				
 	}
 
 	
 	
-	private void weatherAppConstruction() {
-		
-	}
+	
 	
 	
 }
