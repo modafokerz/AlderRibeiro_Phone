@@ -17,19 +17,19 @@ import nav.WeatherApp;
 public class test {
 
 	public static void main(String[] args) {
-//		LockScreen ls = new LockScreen();
-//
-//		Timer t = new javax.swing.Timer(1000, new ActionListener(){
-//
-//		    public void actionPerformed(ActionEvent e){
-//		    	
-//		    	ls.updateSeconds();
-//		    	
-//		    }
-//		});
-//		t.start();
+		LockScreen ls = new LockScreen();
+
+		Timer t = new javax.swing.Timer(1000, new ActionListener(){
+
+	    public void actionPerformed(ActionEvent e){
+		    	
+		    	ls.updateSeconds();
+	    	
+		    }
+		});
+		t.start();
 		
-		new WeatherApp();
+		
 		
 	}
 
