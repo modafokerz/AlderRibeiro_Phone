@@ -22,6 +22,9 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.LineBorder;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import components.WeatherJPanel;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -37,20 +40,30 @@ public class WeatherApp extends AppBaseFrame {
 	
 	
 	private String ville = "Sierre";
-	private String villeStatus = "Ensoleillé";
-	private String villeTemp = "25";
+	private String villeStatus = "";
+	private String villeTemp = "";
+	
 	private WeatherJPanel weatherAppPanel = new WeatherJPanel();
+	private JLabel loadingLabel = new JLabel("Loading.");
+	private static boolean APILoading = true;
+	private int loadingCount = 1;
 	
 	private String apiKey = "0761f6abebe05ed6cd5e1985cdd37791";
+	private double[] sierreCoordinates = new double[2];
+	private double[] sionCoordinates = new double[2];
+	private double[] aigleCoordinates = new double[2];
+	
 	private double[] cityCoordinates = new double[2];
 	
-	private String forecastUrl = "https://api.darksky.net/forecast/"+ apiKey + "/" + cityCoordinates[0]+ "," + cityCoordinates[1];
+	private String forecastUrl;
+	private String jsonData;
+	private JSONObject forecastInfo;
 	
 	private JPanel topAppPanel = new JPanel();
 	private JButton cityChoiceButton = new JButton("Choisir une autre ville");
-	private JLabel cityLabel = new JLabel(ville);
-	private JLabel cityStatus = new JLabel(villeStatus);
-	private JLabel cityTemp = new JLabel(villeTemp + " °C");
+	private JLabel cityLabel;
+	private JLabel cityStatus;
+	private JLabel cityTemp;
 	
 	
 	private JPanel bottomAppPanel = new JPanel();
@@ -58,11 +71,136 @@ public class WeatherApp extends AppBaseFrame {
 	
 	public WeatherApp() {
 		super();
-		httpRequest();
+		
+		// latitude + longitude
+		sierreCoordinates[0] = 46.2923;
+		sierreCoordinates[1] = 7.5323;
+		
+		sionCoordinates[0] = 46.2312;
+		sionCoordinates[1] = 7.3589;
+		
+		aigleCoordinates[0] = 46.3179;
+		aigleCoordinates[1] = 6.9689;
+		
+		cityCoordinates[0] = 46.2923;
+		cityCoordinates[1] = 7.5323;
+		
+		
 		
 		remove(centerPanel);
 		add(weatherAppPanel, BorderLayout.CENTER);
+		weatherAppPanel.add(loadingLabel, BorderLayout.CENTER);
 		weatherAppPanel.setSize(600, 650);
+		
+		forecastUrl = "https://api.darksky.net/forecast/"+ apiKey + "/" + cityCoordinates[0]+ "," + cityCoordinates[1];
+		httpRequest();
+	}
+	
+	private void httpRequest() {
+		
+		
+		System.out.println("blabla 1");
+		
+		// Tâche effectuée sur un thread différent de manière à n'avoir aucune latence d'application
+		// Youhou,,,, ca marche enfin !! putin je suis trop content mdr
+		new SwingWorker <String, Void>() {
+
+				@Override
+				protected String doInBackground() throws Exception {
+					OkHttpClient client = new OkHttpClient();
+					Request request = new Request.Builder().url(forecastUrl).build();
+					
+					Call call = client.newCall(request);
+					try {
+						Response response = call.execute();
+						jsonData = response.body().string();
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					return null;
+				}
+				
+				@Override
+				protected void done () {
+					System.out.println("Done");
+					APILoading = false;
+					weatherAppPanel.remove(loadingLabel);
+					forecastInfo = (JSONObject) JSONValue.parse(jsonData);
+					constructPage();
+				}
+		}.execute();
+		
+//		while(APILoading) {
+//			
+//			switch(loadingCount) {
+//			case 1 : loadingLabel.setText("Loading.");
+//					break;
+//			case 2 : loadingLabel.setText("Loading..");
+//			break;
+//			case 3 :  loadingLabel.setText("Loading...");
+//			break;
+//			}
+//			
+//			
+//			if(loadingCount==3) {
+//				loadingCount=1;
+//			} else {
+//				loadingCount++;
+//			}
+//			
+//			repaint();
+//		}
+		
+		System.out.println("blabla 2");
+	}
+	
+	// Classe permettant d'effectuer la requête HTTP dans un autre thread
+	class ForecastWorker extends SwingWorker <String, Void> {
+		
+
+			@Override
+			protected String doInBackground() throws Exception {
+				OkHttpClient client = new OkHttpClient();
+				Request request = new Request.Builder().url(forecastUrl).build();
+				
+				Call call = client.newCall(request);
+				try {
+					Response response = call.execute();
+					jsonData = response.body().string();
+					return response.body().string();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				return null;
+			}
+			
+			@Override
+			protected void done () {
+				try {
+					System.out.println(get());
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				} 
+			}
+			
+		
+	}
+	
+	private void constructPage() {
+		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");
+		villeStatus = (String) currentWeather.get("summary");
+		double farenheitTemp = (double) currentWeather.get("temperature");
+		double celciusTemp = (farenheitTemp -32) * 5/9;
+		
+		villeTemp = Double.toString(Math.round(celciusTemp));
+		
+		cityLabel = new JLabel(ville);
+		cityStatus = new JLabel(villeStatus);
+		cityTemp = new JLabel(villeTemp + " °C");
+		
 		
 		weatherAppPanel.setLayout(new FlowLayout());
 		weatherAppPanel.add(topAppPanel);
@@ -103,44 +241,9 @@ public class WeatherApp extends AppBaseFrame {
 		bottomAppPanel.setPreferredSize(new Dimension(600, 250));
 		
 		weatherAppPanel.add(bottomAppPanel,BorderLayout.SOUTH);
-	}
-	
-	private void httpRequest() {
-		cityCoordinates[0] = 37.8267;
-		cityCoordinates[1] = -122.4233;
 		
-		System.out.println("blabla 1");
-		// Tâche effectuée sur un thread différent de manière à n'avoir aucune latence
-		// Youhou,,,, ca marche enfin !! putin je suis trop content mdr
-		new SwingWorker <String, Void>() {
-
-			@Override
-			protected String doInBackground() throws Exception {
-				OkHttpClient client = new OkHttpClient();
-				Request request = new Request.Builder().url(forecastUrl).build();
-				
-				Call call = client.newCall(request);
-				try {
-					Response response = call.execute();
-					return response.body().string();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				return null;
-			}
-			
-			@Override
-			protected void done () {
-				try {
-					System.out.println(get());
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				} 
-			}
-			
-		}.execute();
-		System.out.println("blabla 2");
+		revalidate();
+		repaint();
 	}
 	
 	
