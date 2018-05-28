@@ -14,7 +14,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -29,6 +34,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import components.WeatherJPanel;
+import objects.WeatherCity;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -84,10 +90,53 @@ public class WeatherApp extends AppBaseFrame {
 		
 		aigleCoordinates[0] = 46.3179;
 		aigleCoordinates[1] = 6.9689;
+		WeatherCity weatherCity;
 		
-		cityCoordinates[0] = 46.2923;
-		cityCoordinates[1] = 7.5323;
+		File saveFile = new File("saves/weatherCity.ser");
 		
+		if(saveFile.exists()) {
+			
+			
+			try {
+				FileInputStream in = new FileInputStream("saves/weatherCity.ser");
+				ObjectInputStream ois = new ObjectInputStream( in );
+				try {
+					weatherCity = (WeatherCity) ois.readObject();
+					cityCoordinates = weatherCity.getCityCoordinates();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				ois.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		} else {
+			
+			// Coordonnées de sierre par défaut
+			weatherCity = new WeatherCity(sierreCoordinates[0], sierreCoordinates[1]);
+			
+			cityCoordinates[0] = sierreCoordinates[0];
+			cityCoordinates[1] = sierreCoordinates[1];
+			try {
+				FileOutputStream out = new FileOutputStream( "saves/weatherCity.ser" );
+				ObjectOutputStream oos = new ObjectOutputStream( out );
+				oos.writeObject(weatherCity);
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		// Serialization du choix de la ville
 		
 		
 		remove(centerPanel);
@@ -95,6 +144,8 @@ public class WeatherApp extends AppBaseFrame {
 		weatherAppPanel.add(loadingLabel, BorderLayout.CENTER);
 		weatherAppPanel.setSize(600, 650);
 		
+		loadingLabel.setVerticalAlignment(SwingConstants.CENTER);
+		loadingLabel.setFont(new Font("Impact", Font.BOLD, 35));
 		forecastUrl = "https://api.darksky.net/forecast/"+ apiKey + "/" + cityCoordinates[0]+ "," + cityCoordinates[1];
 		httpRequest();
 	}
@@ -110,12 +161,16 @@ public class WeatherApp extends AppBaseFrame {
 
 				@Override
 				protected String doInBackground() throws Exception {
+					
+					// Libraire OkHTTP permettant d'effectuer des requetes HTTP
 					OkHttpClient client = new OkHttpClient();
 					Request request = new Request.Builder().url(forecastUrl).build();
 					
 					Call call = client.newCall(request);
 					try {
 						Response response = call.execute();
+						
+						// Réponse du serveur sous forme de string au format JSON
 						jsonData = response.body().string();
 						
 					} catch (IOException e) {
@@ -130,6 +185,8 @@ public class WeatherApp extends AppBaseFrame {
 					System.out.println("Done");
 					APILoading = false;
 					weatherAppPanel.remove(loadingLabel);
+					
+					// Object JSON créé à partir de la réponse du serveur
 					forecastInfo = (JSONObject) JSONValue.parse(jsonData);
 					constructPage();
 				}
@@ -161,38 +218,7 @@ public class WeatherApp extends AppBaseFrame {
 		System.out.println("blabla 2");
 	}
 	
-	// Classe permettant d'effectuer la requête HTTP dans un autre thread
-	class ForecastWorker extends SwingWorker <String, Void> {
-		
-
-			@Override
-			protected String doInBackground() throws Exception {
-				OkHttpClient client = new OkHttpClient();
-				Request request = new Request.Builder().url(forecastUrl).build();
-				
-				Call call = client.newCall(request);
-				try {
-					Response response = call.execute();
-					jsonData = response.body().string();
-					return response.body().string();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				return null;
-			}
-			
-			@Override
-			protected void done () {
-				try {
-					System.out.println(get());
-				} catch (InterruptedException | ExecutionException e) {
-					e.printStackTrace();
-				} 
-			}
-			
-		
-	}
+	
 	
 	private void constructPage() {
 		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");

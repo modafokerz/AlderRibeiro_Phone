@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import nav.LockScreen;
-import nav.WeatherApp;
+
 
 /*
 * Exercice FIG HES-SO (Sierre)

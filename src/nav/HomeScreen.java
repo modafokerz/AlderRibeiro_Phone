@@ -78,6 +78,7 @@ public class HomeScreen extends AppBaseFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new WeatherApp();
+				HomeScreen.this.dispose();
 			}
 
 		});
