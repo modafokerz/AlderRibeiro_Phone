@@ -8,16 +8,22 @@ package objects;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+
 public class WeatherCity implements Serializable {
-private double [] cityCoordinates = new double[2];
+	private static final long serialVersionUID = 8212470682425818271L;
+	private double cityLatitude;
+	private double cityLongitude;
 	
 	public WeatherCity (double latitude, double longitude) {
-		cityCoordinates[0] = latitude;
-		cityCoordinates[1] = longitude;
+		cityLatitude = latitude;
+		cityLongitude = longitude;
 	}
 	
-	public double [] getCityCoordinates() {
-		return cityCoordinates;
+	public double getCityLatitude() {
+		return cityLatitude;
+	}
+	
+	public double getCityLongitude() {
+		return cityLongitude;
 	}
 }

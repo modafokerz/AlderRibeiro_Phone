@@ -53,7 +53,7 @@ public class WeatherApp extends AppBaseFrame {
 	private String villeTemp = "";
 	
 	private WeatherJPanel weatherAppPanel = new WeatherJPanel();
-	private JLabel loadingLabel = new JLabel("Loading.");
+	private JLabel loadingLabel = new JLabel("Loading...");
 	private static boolean APILoading = true;
 	private int loadingCount = 1;
 	
@@ -90,63 +90,30 @@ public class WeatherApp extends AppBaseFrame {
 		
 		aigleCoordinates[0] = 46.3179;
 		aigleCoordinates[1] = 6.9689;
-		WeatherCity weatherCity;
-		
-		File saveFile = new File("saves/weatherCity.ser");
-		System.out.println(saveFile.exists());
-		if(saveFile.exists()) {
-			
-			
-			try {
-				FileInputStream in = new FileInputStream("saves/weatherCity.ser");
-				ObjectInputStream ois = new ObjectInputStream( in );
-				try {
-					weatherCity = (WeatherCity) ois.readObject();
-					cityCoordinates = weatherCity.getCityCoordinates();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-				ois.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-			
-		} else {
-			
-			// Coordonnées de sierre par défaut
-			weatherCity = new WeatherCity(sierreCoordinates[0], sierreCoordinates[1]);
-			
-			cityCoordinates[0] = sierreCoordinates[0];
-			cityCoordinates[1] = sierreCoordinates[1];
-			try {
-				FileOutputStream out = new FileOutputStream( "saves/weatherCity.ser" );
-				ObjectOutputStream oos = new ObjectOutputStream( out );
-				oos.writeObject(weatherCity);
-				oos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				
-			}
-			
-		}
 		
 		
 		
 		
 		
 		
-		// Serialization du choix de la ville
 		
+		
+		
+		// Serialization du choix de la ville à faire
+		cityCoordinates[0]=sierreCoordinates[0];
+		cityCoordinates[1]=sierreCoordinates[1];
 		
 		remove(centerPanel);
 		add(weatherAppPanel, BorderLayout.CENTER);
 		weatherAppPanel.add(loadingLabel, BorderLayout.CENTER);
 		weatherAppPanel.setSize(600, 650);
-		
+		weatherAppPanel.setLayout(new FlowLayout());
 		loadingLabel.setVerticalAlignment(SwingConstants.CENTER);
-		loadingLabel.setFont(new Font("Impact", Font.BOLD, 35));
+		loadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loadingLabel.setFont(new Font("Impact", Font.BOLD, 50));
+		loadingLabel.setPreferredSize(new Dimension(600,650));
+		loadingLabel.setForeground(Color.WHITE);
+		
 		forecastUrl = "https://api.darksky.net/forecast/"+ apiKey + "/" + cityCoordinates[0]+ "," + cityCoordinates[1];
 		httpRequest();
 	}
@@ -234,7 +201,7 @@ public class WeatherApp extends AppBaseFrame {
 		cityTemp = new JLabel(villeTemp + " °C");
 		
 		
-		weatherAppPanel.setLayout(new FlowLayout());
+		
 		weatherAppPanel.add(topAppPanel);
 		// Top App Weather Panel construction !
 		topAppPanel.setPreferredSize(new Dimension(600, 400));
