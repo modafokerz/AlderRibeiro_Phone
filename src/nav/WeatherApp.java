@@ -127,6 +127,7 @@ public class WeatherApp extends AppBaseFrame {
 				oos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.println(e.getCause());
 			}
 			
 		}
