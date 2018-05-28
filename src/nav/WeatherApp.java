@@ -12,6 +12,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -20,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
 import org.json.simple.JSONObject;
@@ -152,6 +155,8 @@ public class WeatherApp extends AppBaseFrame {
 //			
 //			repaint();
 //		}
+		
+		
 		
 		System.out.println("blabla 2");
 	}
