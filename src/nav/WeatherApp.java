@@ -73,7 +73,7 @@ public class WeatherApp extends AppBaseFrame {
 	private JLabel cityLabel;
 	private JLabel cityStatus;
 	private JLabel cityTemp;
-	
+	private JPanel coordinatesPanel = new JPanel();
 	
 	private JPanel bottomAppPanel = new JPanel();
 	
@@ -219,19 +219,37 @@ public class WeatherApp extends AppBaseFrame {
 		
 		topAppPanel.add(cityChoiceButton);
 		
-		cityLabel.setPreferredSize(new Dimension(600,100));
+		cityLabel.setPreferredSize(new Dimension(600,90));
 		cityLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		cityLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		cityLabel.setFont(new Font("Impact", Font.PLAIN, 80));
+		cityLabel.setFont(new Font("Impact", Font.BOLD, 80));
 		cityLabel.setForeground(Color.white);
 		topAppPanel.add(cityLabel);
 		
-		cityStatus.setPreferredSize(new Dimension(600,20));
+		coordinatesPanel.setOpaque(false);
+		coordinatesPanel.setPreferredSize(new Dimension(600,20));
+		
+		String str1 = "[Latitude : " + cityCoordinates[0] + ", ";
+		String str2 = "Longitude : " + cityCoordinates[1] + "]";
+		JLabel latLabel = new JLabel(str1);
+		latLabel.setVerticalAlignment(SwingConstants.TOP);
+		
+		JLabel longLabel = new JLabel(str2);
+		longLabel.setVerticalAlignment(SwingConstants.TOP);
+		
+		coordinatesPanel.add(latLabel);
+		coordinatesPanel.add(longLabel);
+		topAppPanel.add(coordinatesPanel);
+		
+		cityStatus.setPreferredSize(new Dimension(600,35));
 		cityStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		cityStatus.setForeground(Color.white);
+		cityStatus.setVerticalAlignment(SwingConstants.BOTTOM);
+		cityStatus.setFont(new Font("Impact", Font.PLAIN, 30));
 		topAppPanel.add(cityStatus);
 		
 		cityTemp.setPreferredSize(new Dimension(600,200));
+		
 		topAppPanel.add(cityTemp);
 		
 		weatherAppPanel.add(topAppPanel, BorderLayout.CENTER);
