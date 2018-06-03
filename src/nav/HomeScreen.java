@@ -50,6 +50,15 @@ public class HomeScreen extends AppBaseFrame {
 			System.out.println(ex);
 		}
 
+		galleryIcon.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new GalleryScreen();
+				HomeScreen.this.dispose();
+			}
+
+		});
 		newCenterPanel.add(galleryIcon);
 
 
