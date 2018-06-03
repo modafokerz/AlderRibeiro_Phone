@@ -20,13 +20,18 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -76,13 +81,34 @@ public class GalleryScreen extends AppBaseFrame {
 		
 		
 		
-		GalleryPicture gl = new GalleryPicture("pic01.jpg");
-		picturesPanel.add(gl);
-		for (int i = 0; i < 8 ; i++) {
+		File galleryFolder = new File("img/gallery/");
+		int nbPhotos = galleryFolder.listFiles().length;
+		
+		if(nbPhotos!=0) {
+			String fileCreationDate = "";
+			File [] pictures = galleryFolder.listFiles();
+			for (int i = 0; i < pictures.length; i++) {
+				
+				BasicFileAttributes attr = null;
+				try {
+					attr = Files.readAttributes(Paths.get(pictures[i].getAbsolutePath()), BasicFileAttributes.class);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				FileTime date = attr.creationTime();
+				
+				fileCreationDate = new SimpleDateFormat("dd/MM/yyyy")
+		                   .format(date.toMillis());
+				
+				picturesPanel.add(new GalleryPicture(pictures[i].getPath(), fileCreationDate));
+			}
+		}
+		
+		
+		for (int i = 0; i < 9-nbPhotos; i++) {
 			picturesPanel.add(new JLabel("test"));
 		}
 		
-		JScrollPane scroll = new JScrollPane(picturesPanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		galleryPanel.add(picturesPanel, BorderLayout.SOUTH);
 	}
 	
@@ -114,13 +140,21 @@ public class GalleryScreen extends AppBaseFrame {
 	class GalleryPicture extends JButton {
 		
 		private boolean isIcon = true;
-		private String path = "img/gallery/";
+		private String name;
+		private String creationDate;
 		
-		public GalleryPicture(String pictureName) {
+		public GalleryPicture(String path, String creationD) {
+			creationDate = creationD;
+			String galleryPath = "img\\gallery\\";
+			
+			name = path.replace(galleryPath, "");
+			System.out.println(creationD);
+			
+			
 			if(isIcon) {
 				
 				try {
-					Image img = ImageIO.read(new File(path+pictureName));
+					Image img = ImageIO.read(new File(path));
 					img = getImageIcon(img);
 					setIcon(new ImageIcon(img));
 				} catch (IOException e) {
