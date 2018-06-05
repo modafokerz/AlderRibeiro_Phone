@@ -98,6 +98,7 @@ public class HomeScreen extends AppBaseFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new CalculatorApp();
+				HomeScreen.this.dispose();
 				
 			}
 		});
