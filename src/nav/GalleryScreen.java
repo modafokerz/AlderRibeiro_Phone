@@ -81,7 +81,7 @@ public class GalleryScreen extends AppBaseFrame {
 		topPanel.add(addPic);
 		
 		// Construction du panel contenant les photos
-		picturesPanel.setLayout(new GridLayout(3,3));
+		picturesPanel.setLayout(new GridLayout(1,3));
 		
 		
 		
@@ -106,8 +106,8 @@ public class GalleryScreen extends AppBaseFrame {
 		}
 		
 		
-		
-		galleryPanel.add(picturesPanel, BorderLayout.CENTER);
+		JScrollPane jscroll = new JScrollPane (picturesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		galleryPanel.add(jscroll, BorderLayout.CENTER);
 		
 		
 		addPic.addActionListener(new ActionListener()
