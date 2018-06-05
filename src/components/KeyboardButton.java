@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
+import nav.CalculatorApp;
 import nav.PinScreen;
 
 /*
@@ -21,10 +22,12 @@ import nav.PinScreen;
 @SuppressWarnings("serial")
 public class KeyboardButton extends JButton {
 	private PinScreen ps;
+	private CalculatorApp ca;
 	public KeyboardButton(String string, PinScreen ps){
 		super(string);
 		this.ps = ps;
 		construction();
+		addActionListener();
 	}
 	
 	private void construction() {
@@ -55,7 +58,18 @@ public class KeyboardButton extends JButton {
             }
          });
         
-        addActionListener(new ActionListener()
+        
+	}
+	
+	public KeyboardButton(String str, CalculatorApp calculatorApp) {
+		super(str);
+		this.ca = calculatorApp;
+		
+		construction();
+	}
+	
+	private void addActionListener() {
+		addActionListener(new ActionListener()
         {
         	  public void actionPerformed(ActionEvent e)
         	  {
@@ -65,4 +79,6 @@ public class KeyboardButton extends JButton {
         	  }
         	});
 	}
+	
+
 }
