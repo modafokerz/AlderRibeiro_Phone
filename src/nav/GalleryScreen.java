@@ -151,6 +151,7 @@ public class GalleryScreen extends AppBaseFrame {
 		topPanel.add(buttonLeft);
 		topPanel.add(label);
 		topPanel.add(buttonRight);
+		
 	}
 	
 	class topButton extends JButton {
@@ -255,7 +256,7 @@ public class GalleryScreen extends AppBaseFrame {
 			FileTime date = attr.creationTime();
 			String str = new SimpleDateFormat("dd/MM/yyyy")
 	                   .format(date.toMillis());
-			System.out.println(str);
+			
 			return str;
 		}
 		
