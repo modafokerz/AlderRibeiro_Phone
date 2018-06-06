@@ -193,12 +193,13 @@ public class GalleryScreen extends AppBaseFrame {
 
 	class GalleryPicture extends JButton {
 
-		private boolean isIcon = true;
+
 		private String name;
 		private String creationDate;
 		private String path;
 		private String extension;
-
+		private Image img;
+		private Image fullImg;
 
 		public GalleryPicture(String path) {
 			setPreferredSize(new Dimension(200,183));
@@ -211,20 +212,25 @@ public class GalleryScreen extends AppBaseFrame {
 			name = path.replace(galleryPath, "");
 			name = name.substring(4, name.length()-4);
 
+			addActionListener();
 
-			if(isIcon) {
-
-				try {
-					Image img = ImageIO.read(new File(path));
-					img = getImageIcon(img);
-					setIcon(new ImageIcon(img));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			} else {
-
+			try {
+				img = ImageIO.read(new File(path));
+				img = getImageIcon(img);
+				setIcon(new ImageIcon(img));
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			
+			try {
+				fullImg = ImageIO.read(new File(path));
+				fullImg = getFullImage(fullImg);
+				setIcon(new ImageIcon(img));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+
 		}
 
 		private String getExtension(String path) {
@@ -244,13 +250,31 @@ public class GalleryScreen extends AppBaseFrame {
 			return resizedImg;
 		}
 
-		private Image getFullImage () {
-			return null;
+		private void addActionListener() {
+			addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					
+					GalleryScreen.this.dispose();
+					new GalleryPicScreen(GalleryPicture.this);
+
+
+				}
+			});
 		}
 
-		public void setAsImage() {
-			isIcon = false;
+		private Image getFullImage (Image img) {
+			
+			BufferedImage resizedImg = new BufferedImage(500, 450, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = resizedImg.createGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g2.drawImage(img, 0, 0, 500, 450, null);
+			g2.dispose();
+			return resizedImg;
 		}
+
+		
 
 		private String getCreationDate(String path) {
 			BasicFileAttributes attr = null;

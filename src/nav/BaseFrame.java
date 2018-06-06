@@ -54,7 +54,7 @@ public class BaseFrame extends JFrame {
         Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
         Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
         batteryLife.setText("Power : " + batteryStatus.getBatteryLifePercent());
-        
+        setUndecorated(true);
 		// Panel du top (Operateur, Heure, Date)
         topPanel.setVisible(true);
         topPanel.setBackground(new Color(0, 0, 0, 10));
