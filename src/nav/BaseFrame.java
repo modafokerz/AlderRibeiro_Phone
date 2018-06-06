@@ -1,8 +1,10 @@
 package nav;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -83,19 +85,28 @@ public class BaseFrame extends JFrame implements KeyListener{
 		centerPanel.setLayout(new GridLayout(3,3, 10, 10));
 		
 		
-		addKeyListener(new KeyAdapter() {
-			 public void keyPressed(KeyEvent ke) {  // handler
-			    if(ke.getKeyCode() == ke.VK_ESCAPE) {
-			      
-			      BaseFrame.this.dispose();
-			      } 
-			 }
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Cancel"); 
+	        getRootPane().getActionMap().put("Cancel", new AbstractAction(){ 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                BaseFrame.this.dispose();
+	            }
+	        });
+	        
+	        
+	        addWindowListener(new WindowAdapter() {
+	            public void windowClosing(java.awt.event.WindowEvent evt) 
+	            {
+	            	BaseFrame.this.dispose();
+	            }
+	        });
 		
 		
 		
 		
 		
-		});
+		
 	}
 	
 	public void turnOffTopHour() {
@@ -104,6 +115,10 @@ public class BaseFrame extends JFrame implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_ESCAPE) {
+		      
+		      BaseFrame.this.dispose();
+		      } 
 	}
 
 	@Override

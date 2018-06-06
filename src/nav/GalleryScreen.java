@@ -46,6 +46,7 @@ public class GalleryScreen extends AppBaseFrame {
 	private JPanel galleryPanel = new JPanel();
 	private JPanel topPanel = new JPanel();
 	private JPanel picturesPanel = new JPanel();
+	
 	private File [] pictures;
 	// Eléments du topPanel
 	private topButton recherche = new topButton("img/icons/search_icon.png");
@@ -58,9 +59,6 @@ public class GalleryScreen extends AppBaseFrame {
 
 		// Initialisation des Panel
 		topPanel.setPreferredSize(new Dimension(600,100));
-
-
-
 
 		galleryPanel.setPreferredSize(new Dimension(600,650));
 		galleryPanel.setLayout(new FlowLayout());
@@ -80,6 +78,7 @@ public class GalleryScreen extends AppBaseFrame {
 		topPanel.add(galerieLabel);
 		topPanel.add(addPic);
 
+		
 		// Construction du panel contenant les photos
 		picturesPanel.setLayout(new GridLayout(0,3));
 
