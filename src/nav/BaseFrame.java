@@ -35,11 +35,13 @@ public class BaseFrame extends JFrame {
 	
 	public BaseFrame() {
 		// Paramètres de base de la JFrame
+		setUndecorated(true);
 		setVisible(true);
 		setSize(600,800);
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); //mettre la fenêtre au milieu de l'écran.
+		
 		
 		// Heure + Date dans les label + gère la batterie
 		Calendar cal = Calendar.getInstance(); //lib. java qui prend l'instance date de l'ordi
