@@ -20,5 +20,6 @@ public class AppBaseFrame extends BaseFrame {
 		
 		
 		bp.addListener(this);
+		bp.addLockListener(this);
 	}
 }

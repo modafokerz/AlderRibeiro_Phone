@@ -15,12 +15,14 @@ import javax.swing.JPanel;
 
 import nav.AppBaseFrame;
 import nav.HomeScreen;
+import nav.LockScreen;
 
 
 @SuppressWarnings("serial")
 public class HomeBottomPanel extends JPanel {
 	
 	private HPButton homeButton = new HPButton("HOME");
+	private HPButton lockButton = new HPButton(true);
 	
 	
 	public HomeBottomPanel() {
@@ -30,7 +32,7 @@ public class HomeBottomPanel extends JPanel {
 		
 		// Il manque l'action Listener
 		add(homeButton);
-		
+		add(lockButton);
 	}
 	
 	public void addListener(AppBaseFrame ap) {
@@ -40,6 +42,18 @@ public class HomeBottomPanel extends JPanel {
         	  {
         	    
         		new HomeScreen();
+        		ap.dispose();
+        	  }
+        	});
+	}
+	
+	public void addLockListener(AppBaseFrame ap) {
+		lockButton.addActionListener(new ActionListener()
+        {
+        	  public void actionPerformed(ActionEvent e)
+        	  {
+        	    
+        		new LockScreen();
         		ap.dispose();
         	  }
         	});

@@ -36,8 +36,20 @@ public class HPButton extends JButton {
 		super(str);
 		construction();
 	}
-	public HPButton() {
+	public HPButton(boolean isLockButton) {
 		construction();
+		if(isLockButton) {
+			try {
+				Image img = ImageIO.read(new File("img/icons/lock-icon.png"));
+				setIcon(new ImageIcon(img));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		this.setPreferredSize(new Dimension(50,50));
+		
+		
 	}
 	
 	
@@ -46,12 +58,7 @@ public class HPButton extends JButton {
 		
 		
 		
-		try {
-			Image img = ImageIO.read(new File("img/icons/home-icon.png"));
-			setIcon(new ImageIcon(img));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		
 		setFont(new Font("Helvetica", Font.BOLD, 20));
 		setVerticalTextPosition(SwingConstants.CENTER);

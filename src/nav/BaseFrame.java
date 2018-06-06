@@ -1,5 +1,10 @@
 package nav;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +22,7 @@ import components.TopJLabel;
 */
 
 @SuppressWarnings("serial")
-public class BaseFrame extends JFrame {
+public class BaseFrame extends JFrame implements KeyListener{
 	
 	// Le panel du Top et ses composants
 	private JPanel topPanel = new JPanel();
@@ -35,11 +40,13 @@ public class BaseFrame extends JFrame {
 	
 	public BaseFrame() {
 		// Paramètres de base de la JFrame
+		setUndecorated(true);
 		setVisible(true);
 		setSize(600,800);
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null); //mettre la fenêtre au milieu de l'écran.
+		
 		
 		// Heure + Date dans les label + gère la batterie
 		Calendar cal = Calendar.getInstance(); //lib. java qui prend l'instance date de l'ordi
@@ -78,7 +85,22 @@ public class BaseFrame extends JFrame {
 		centerPanel.setLayout(new GridLayout(3,3, 10, 10));
 		
 		
-
+		getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+	            KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Cancel"); 
+	        getRootPane().getActionMap().put("Cancel", new AbstractAction(){ 
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                BaseFrame.this.dispose();
+	            }
+	        });
+	        
+	        
+	        addWindowListener(new WindowAdapter() {
+	            public void windowClosing(java.awt.event.WindowEvent evt) 
+	            {
+	            	BaseFrame.this.dispose();
+	            }
+	        });
 		
 		
 		
@@ -89,6 +111,23 @@ public class BaseFrame extends JFrame {
 	
 	public void turnOffTopHour() {
 		currentHour.setVisible(false);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_ESCAPE) {
+		      
+		      BaseFrame.this.dispose();
+		      } 
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 	
 	
