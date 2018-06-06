@@ -3,7 +3,6 @@ package nav;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import components.*;
 
 public class CalculatorApp extends PinScreen{

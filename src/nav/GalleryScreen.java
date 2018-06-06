@@ -81,7 +81,7 @@ public class GalleryScreen extends AppBaseFrame {
 		topPanel.add(addPic);
 		
 		// Construction du panel contenant les photos
-		picturesPanel.setLayout(new GridLayout(1,3));
+		picturesPanel.setLayout(new GridLayout(0,3));
 		
 		
 		
