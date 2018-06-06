@@ -107,6 +107,8 @@ public class GalleryScreen extends AppBaseFrame {
 		
 		
 		JScrollPane jscroll = new JScrollPane (picturesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jscroll.setVisible(true);
+		jscroll.setPreferredSize(new Dimension(600,550));
 		galleryPanel.add(jscroll, BorderLayout.CENTER);
 		
 		
@@ -197,6 +199,8 @@ public class GalleryScreen extends AppBaseFrame {
 		
 		
 		public GalleryPicture(String path) {
+			setPreferredSize(new Dimension(200,183));
+			setSize(200,183);
 			this.path = path;
 			creationDate = getCreationDate(path);
 			extension = getExtension(path);
