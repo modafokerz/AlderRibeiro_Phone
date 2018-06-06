@@ -1,5 +1,8 @@
 package nav;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +20,7 @@ import components.TopJLabel;
 */
 
 @SuppressWarnings("serial")
-public class BaseFrame extends JFrame {
+public class BaseFrame extends JFrame implements KeyListener{
 	
 	// Le panel du Top et ses composants
 	private JPanel topPanel = new JPanel();
@@ -80,17 +83,36 @@ public class BaseFrame extends JFrame {
 		centerPanel.setLayout(new GridLayout(3,3, 10, 10));
 		
 		
-
+		addKeyListener(new KeyAdapter() {
+			 public void keyPressed(KeyEvent ke) {  // handler
+			    if(ke.getKeyCode() == ke.VK_ESCAPE) {
+			      
+			      BaseFrame.this.dispose();
+			      } 
+			 }
 		
 		
 		
 		
 		
-		
+		});
 	}
 	
 	public void turnOffTopHour() {
 		currentHour.setVisible(false);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 	
 	
