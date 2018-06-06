@@ -31,7 +31,7 @@ public class BaseFrame extends JFrame implements KeyListener{
 	private TopJLabel currentDate = new TopJLabel();
 	
 	// Le panel du centre et ses composants
-	protected BackgroundPanel centerPanel = new BackgroundPanel();
+	protected BackgroundPanel centerPanel = new BackgroundPanel("img/HomeBackground.jpg");
 	
 	
 

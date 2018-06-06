@@ -13,21 +13,17 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.imageio.ImageIO;
-
 import javax.swing.ImageIcon;
-
 import javax.swing.JLabel;
-
-import components.BackgroundPanelApp;
+import components.BackgroundPanel;
 import components.HomeIcon;
 
 
 @SuppressWarnings("serial")
 public class HomeScreen extends AppBaseFrame {
 
-	private BackgroundPanelApp newCenterPanel = new BackgroundPanelApp();
+	private BackgroundPanel newCenterPanel = new BackgroundPanel("img/HomeBackground2.jpg");
 
 	private HomeIcon galleryIcon;
 	private HomeIcon contactsIcon;

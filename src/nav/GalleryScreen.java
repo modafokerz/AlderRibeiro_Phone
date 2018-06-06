@@ -47,6 +47,8 @@ public class GalleryScreen extends AppBaseFrame {
 	private JPanel topPanel = new JPanel();
 	private JPanel picturesPanel = new JPanel();
 	
+	private JScrollPane jscroll;
+	
 	private File [] pictures;
 	// Eléments du topPanel
 	private topButton recherche = new topButton("img/icons/search_icon.png");
@@ -107,7 +109,7 @@ public class GalleryScreen extends AppBaseFrame {
 			}
 		}
 
-		JScrollPane jscroll = new JScrollPane (picturesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jscroll = new JScrollPane (picturesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jscroll.setVisible(true);
 		jscroll.setPreferredSize(new Dimension(600,550));
 		galleryPanel.add(jscroll, BorderLayout.CENTER);
@@ -130,8 +132,10 @@ public class GalleryScreen extends AppBaseFrame {
 
 						if(pictures.length<10) {
 							generatedPath = "00"+pictures.length+"_";
-						} else {
+						} else if (pictures.length<100) {
 							generatedPath = "0"+pictures.length+"_";
+						} else {
+							generatedPath = pictures.length+"_";
 						}
 
 						Files.copy(chooser.getSelectedFile().toPath(), Paths.get("img/gallery/"+ generatedPath + chooser.getSelectedFile().getName()),
@@ -155,6 +159,11 @@ public class GalleryScreen extends AppBaseFrame {
 		topPanel.add(label);
 		topPanel.add(buttonRight);
 
+	}
+	
+	protected void setMidPanel(JScrollPane panel) {
+		galleryPanel.remove(jscroll);
+		galleryPanel.add(panel, BorderLayout.CENTER);
 	}
 
 	class topButton extends JButton {
@@ -255,9 +264,9 @@ public class GalleryScreen extends AppBaseFrame {
 				public void actionPerformed(ActionEvent e)
 				{
 					
-					GalleryScreen.this.dispose();
+					
 					new GalleryPicScreen(GalleryPicture.this);
-
+					GalleryScreen.this.dispose();
 
 				}
 			});
@@ -289,14 +298,19 @@ public class GalleryScreen extends AppBaseFrame {
 			return str;
 		}
 
+
 		protected String[] getPictureInformations() {
-			String [] pictureInformations = null;
+			String [] pictureInformations= new String[4];
 			pictureInformations[0]=name;
 			pictureInformations[1]=creationDate;
 			pictureInformations[2]=path;
 			pictureInformations[3]=extension;
 
 			return pictureInformations;
+		}
+		
+		protected Image getPicImage() {
+			return fullImg;
 		}
 	}
 }
