@@ -1,5 +1,5 @@
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 17 mai 2018
 * Date de modification : /
@@ -11,32 +11,40 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 
-
-
 @SuppressWarnings("serial")
 public class HPButton extends JButton {
-	
+	/**
+	 * Composant JButton qui donne la forme désirée aux boutons du HomeBottomPanel c'est à dire : Home et Lock.
+	 * @author Nelson
+	 */
 	
 	
 	public HPButton(String str) {
+		/**
+		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
+		 * @author Nelson
+		 * @param string représentant le nom à donner au bouton.
+		 */
 		super(str);
 		construction();
 	}
 	public HPButton(boolean isLockButton) {
+		/**
+		 * constructeur qui appelle la méthode construction à l'instanciation du composant et qui attribue l'image lock-icon.png au bouton.
+		 * @author Nelson
+		 * @param boolean permettant de savoir si c'est un lockbutton ou non
+		 */
 		construction();
 		if(isLockButton) {
 			try {

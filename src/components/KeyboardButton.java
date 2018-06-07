@@ -6,14 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
-
 import nav.CalculatorApp;
 import nav.PinScreen;
 
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 30 avr. 2018
 * Date de modification : /
@@ -21,9 +19,18 @@ import nav.PinScreen;
 
 @SuppressWarnings("serial")
 public class KeyboardButton extends JButton {
+	/**
+	 * composant JButton qui est utilisé dans le PinScreen(code pin) et dans la calculatrice.
+	 * @author Nelson
+	 */
 	private PinScreen ps;
 	private CalculatorApp ca;
 	public KeyboardButton(String string, PinScreen ps){
+		/**
+		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
+		 * @author Nelson
+		 * @param string représentant le nom à donner au bouton.
+		 */
 		super(string);
 		this.ps = ps;
 		construction();
