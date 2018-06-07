@@ -41,6 +41,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import nav.GalleryScreen.topButton;
+import nav.GalleryScreen.topLabel;
+
+@SuppressWarnings("serial")
 public class GalleryScreen extends AppBaseFrame {
 
 	private JPanel galleryPanel = new JPanel();
@@ -58,29 +62,95 @@ public class GalleryScreen extends AppBaseFrame {
 	public GalleryScreen() {
 		remove(centerPanel);
 
-
-		// Initialisation des Panel
+		// construction de la Frame
 		construction();
+	}
+	
+	public GalleryScreen(String str, boolean isSearchByDate) {
+		remove(centerPanel);
+		
+		researchConstruction(str, isSearchByDate);
+	}
+	
+	private void researchConstruction(String str, boolean isSearchByDate) {
+		
+		baseConstruction();
+		topPanel.setLayout(new FlowLayout());
+		topButton returnButton = new topButton("img/icons/return-icon.png");
+		
+		returnButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
+				new GalleryScreen();
+				GalleryScreen.this.dispose();
+			}
+		});
+		
+		topLabel rechercheLabel = new topLabel("Images trouvées : ");
+		JLabel emptyLabel = new JLabel("");
+		emptyLabel.setPreferredSize(new Dimension(100,70));
+		
+		topPanel.add(returnButton);
+		topPanel.add(rechercheLabel);
+		topPanel.add(emptyLabel);
+		
+		picturesPanel.setLayout(new GridLayout(0,3));
+		File galleryFolder = new File("img/gallery/");
+		int nbPhotos = galleryFolder.listFiles().length;
+		int nbPics = 0;
+		if(nbPhotos!=0) {
+			pictures = galleryFolder.listFiles();
+			for (int i = 0; i < pictures.length; i++) {
+				
+				GalleryPicture picture = new GalleryPicture(pictures[i].getPath());
+				String [] pictureInfos = picture.getPictureInformations();
+				
+				
+				String picDate = pictureInfos[1].toLowerCase();
+				String picName = pictureInfos[0].toLowerCase();
+				
+				if(isSearchByDate) {
+					if(picDate.equals(str)) {
+						picturesPanel.add(picture);
+						nbPics++;
+					}
+					
+				} else {
+					str = str.toLowerCase();
+					if(picName.contains(str)) {
+						picturesPanel.add(picture);
+						nbPics++;
+					}
+				}
+
+			}
+		}
+
+		if (nbPics<9) {
+			for (int i = 0; i < 9-nbPics; i++) {
+				JLabel x = new JLabel();
+				x.setPreferredSize(new Dimension(200,183));
+				picturesPanel.add(x);
+			}
+		}
+
+		jscroll = new JScrollPane (picturesPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		jscroll.setVisible(true);
+		jscroll.setPreferredSize(new Dimension(600,550));
+		galleryPanel.add(jscroll, BorderLayout.CENTER);
+		
+		
 	}
 
 
-	protected void construction() {
-		topPanel.setPreferredSize(new Dimension(600,100));
-
-		galleryPanel.setPreferredSize(new Dimension(600,650));
-		galleryPanel.setLayout(new FlowLayout());
-
-		galleryPanel.add(topPanel,BorderLayout.NORTH);
-
-
-		add(galleryPanel, BorderLayout.CENTER);
+	private void construction() {
+		baseConstruction();
 
 
 		// Construction du panel du top
 		topPanel.setLayout(new FlowLayout());
-
-
-
 		topPanel.add(recherche);
 		topPanel.add(galerieLabel);
 		topPanel.add(addPic);
@@ -88,19 +158,12 @@ public class GalleryScreen extends AppBaseFrame {
 		
 		// Construction du panel contenant les photos
 		picturesPanel.setLayout(new GridLayout(0,3));
-
-
-
 		File galleryFolder = new File("img/gallery/");
 		int nbPhotos = galleryFolder.listFiles().length;
 
-
 		if(nbPhotos!=0) {
-
 			pictures = galleryFolder.listFiles();
 			for (int i = 0; i < pictures.length; i++) {
-
-
 
 				picturesPanel.add(new GalleryPicture(pictures[i].getPath()));
 			}
@@ -119,7 +182,7 @@ public class GalleryScreen extends AppBaseFrame {
 		jscroll.setPreferredSize(new Dimension(600,550));
 		galleryPanel.add(jscroll, BorderLayout.CENTER);
 
-
+		// boutton permettant l'ajout de photos
 		addPic.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -133,7 +196,6 @@ public class GalleryScreen extends AppBaseFrame {
 					try {
 
 						String generatedPath = null;
-						String pathImage = chooser.getSelectedFile().getPath();
 
 						if(pictures.length<10) {
 							generatedPath = "00"+pictures.length+"_";
@@ -155,6 +217,7 @@ public class GalleryScreen extends AppBaseFrame {
 				}
 			}});
 		
+		// Bouton permettant d'effectuer une recherche
 		recherche.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -163,7 +226,17 @@ public class GalleryScreen extends AppBaseFrame {
 				GalleryScreen.this.dispose();
 			}
 		});
+		
 	}
+	
+	private void baseConstruction() {
+		topPanel.setPreferredSize(new Dimension(600,100));
+		galleryPanel.setPreferredSize(new Dimension(600,650));
+		galleryPanel.setLayout(new FlowLayout());
+		galleryPanel.add(topPanel,BorderLayout.NORTH);
+		add(galleryPanel, BorderLayout.CENTER);
+	}
+	
 	protected void setTopPanel(JButton buttonLeft, JLabel label, JButton buttonRight) {
 		topPanel.removeAll();
 		topPanel.add(buttonLeft);

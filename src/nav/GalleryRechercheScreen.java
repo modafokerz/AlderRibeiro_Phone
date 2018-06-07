@@ -61,6 +61,10 @@ public class GalleryRechercheScreen extends GalleryScreen {
 		
 		recherchePanel.add(rechercheParNom);
 		recherchePanel.add(rechercheParDate);
+		JLabel tipDate = new JLabel("TIP : La recherche par date doit se faire au format suivant : '04/06/2018'");
+		tipDate.setPreferredSize(new Dimension(600,100));
+		tipDate.setHorizontalAlignment(SwingConstants.CENTER);
+		recherchePanel.add(tipDate);
 		
 		setMidPanel(recherchePanel);
 		
@@ -100,7 +104,10 @@ public class GalleryRechercheScreen extends GalleryScreen {
 					picNom.setText(null);
 					picDate.setText(null);
 				}else {
-					new GalleryScreen();
+					if(picNom.getText().equals(""))
+						new GalleryScreen(picDate.getText(),true);
+					else
+						new GalleryScreen(picNom.getText(), false);
 					GalleryRechercheScreen.this.dispose();
 				}
 				
