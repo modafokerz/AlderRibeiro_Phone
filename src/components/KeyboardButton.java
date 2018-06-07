@@ -20,16 +20,18 @@ import nav.PinScreen;
 @SuppressWarnings("serial")
 public class KeyboardButton extends JButton {
 	/**
-	 * composant JButton qui est utilisé dans le PinScreen(code pin) et dans la calculatrice.
+	 * composant JButton qui est utilisé dans le PinScreen(code pin) et dans la calculatrice qui compose le clavier.
 	 * @author Nelson
 	 */
 	private PinScreen ps;
 	private CalculatorApp ca;
+	
 	public KeyboardButton(String string, PinScreen ps){
 		/**
 		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
 		 * @author Nelson
 		 * @param string représentant le nom à donner au bouton.
+		 * @param pinscreen, instance du pinscreen qui y update un composant JLabel.
 		 */
 		super(string);
 		this.ps = ps;
@@ -38,6 +40,10 @@ public class KeyboardButton extends JButton {
 	}
 	
 	private void construction() {
+		/**
+		 * méthode qui construit l'apparence du composant.
+		 * @author Nelson
+		 */
 		setFocusPainted(false);
 		setFont(new Font("Tahoma", Font.BOLD, 30));
 		setForeground(Color.WHITE);
@@ -69,6 +75,12 @@ public class KeyboardButton extends JButton {
 	}
 	
 	public KeyboardButton(String str, CalculatorApp calculatorApp) {
+		/**
+		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
+		 * @author Jean Marie
+		 * @param string représentant le nom à donner au bouton.
+		 * @param calculatorApp, instance de la calculatrice qui y update un composant JLabel.
+		 */
 		super(str);
 		this.ca = calculatorApp;
 		
@@ -76,6 +88,10 @@ public class KeyboardButton extends JButton {
 	}
 	
 	private void addActionListener() {
+		/**
+		 * méthode qui ajoute un actionlistener au composant lui même qui update le JLabel du pinscreen affichant l'état du code .
+		 * @author Nelson
+		 */
 		addActionListener(new ActionListener()
         {
         	  public void actionPerformed(ActionEvent e)

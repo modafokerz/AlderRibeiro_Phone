@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import components.BackgroundPanel;
 import components.WeatherJPanel;
 import objects.WeatherCity;
 import okhttp3.Call;
@@ -50,7 +51,7 @@ public class WeatherApp extends AppBaseFrame {
 	private String villeStatus = "";
 	private String villeTemp = "";
 	
-	private WeatherJPanel weatherAppPanel = new WeatherJPanel();
+	private BackgroundPanel weatherAppPanel = new BackgroundPanel("img/weatherApp/weatherAppBackground.png");
 	private JLabel loadingLabel = new JLabel("Loading...");
 	private static boolean APILoading = true;
 	private int loadingCount = 1;
@@ -157,37 +158,37 @@ public class WeatherApp extends AppBaseFrame {
 					constructPage();
 				}
 		}.execute();
-		
-		Timer t = new javax.swing.Timer(500, new ActionListener(){
-
-		    public void actionPerformed(ActionEvent e){
-			    	
-		    	switch(loadingCount) {
-				case 1 : loadingLabel.setText("Loading.");
-						break;
-				case 2 : loadingLabel.setText("Loading..");
-				break;
-				case 3 :  loadingLabel.setText("Loading...");
-				break;
-				}
-				
-			
-				if(loadingCount==3) {
-					loadingCount=1;
-				} else {
-					loadingCount++;
-				}
-				revalidate();
-				repaint();	
-		    	
-			    }
-			});
-		while(APILoading) {
-			
-				t.start();
-			
-		}
-		
+//		
+//		Timer t = new javax.swing.Timer(500, new ActionListener(){
+//
+//		    public void actionPerformed(ActionEvent e){
+//			    	
+//		    	switch(loadingCount) {
+//				case 1 : loadingLabel.setText("Loading.");
+//						break;
+//				case 2 : loadingLabel.setText("Loading..");
+//				break;
+//				case 3 :  loadingLabel.setText("Loading...");
+//				break;
+//				}
+//				
+//			
+//				if(loadingCount==3) {
+//					loadingCount=1;
+//				} else {
+//					loadingCount++;
+//				}
+//				revalidate();
+//				repaint();	
+//		    	
+//			    }
+//			});
+//		while(APILoading) {
+//			
+//				t.start();
+//			
+//		}
+//		
 		
 		
 		System.out.println("blabla 2");
