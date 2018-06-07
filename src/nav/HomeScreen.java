@@ -66,7 +66,15 @@ public class HomeScreen extends AppBaseFrame {
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
+		contactsIcon.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new ContactApp();
+				HomeScreen.this.dispose();
+			}
+
+		});
 		newCenterPanel.add(contactsIcon);
 
 		// Icone de météo
