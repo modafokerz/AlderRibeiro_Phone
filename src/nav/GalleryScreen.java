@@ -149,6 +149,15 @@ public class GalleryScreen extends AppBaseFrame {
 
 				}
 			}});
+		
+		recherche.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				new GalleryRechercheScreen();
+				GalleryScreen.this.dispose();
+			}
+		});
 	}
 
 
@@ -162,6 +171,11 @@ public class GalleryScreen extends AppBaseFrame {
 	}
 	
 	protected void setMidPanel(JScrollPane panel) {
+		galleryPanel.remove(jscroll);
+		galleryPanel.add(panel, BorderLayout.CENTER);
+	}
+	
+	protected void setMidPanel(JPanel panel) {
 		galleryPanel.remove(jscroll);
 		galleryPanel.add(panel, BorderLayout.CENTER);
 	}
