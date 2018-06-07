@@ -171,7 +171,7 @@ public class WeatherApp extends AppBaseFrame {
 //			break;
 //			}
 //			
-//			
+//		
 //			if(loadingCount==3) {
 //				loadingCount=1;
 //			} else {

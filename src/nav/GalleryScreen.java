@@ -60,6 +60,11 @@ public class GalleryScreen extends AppBaseFrame {
 
 
 		// Initialisation des Panel
+		construction();
+	}
+
+
+	protected void construction() {
 		topPanel.setPreferredSize(new Dimension(600,100));
 
 		galleryPanel.setPreferredSize(new Dimension(600,650));
@@ -159,9 +164,6 @@ public class GalleryScreen extends AppBaseFrame {
 			}
 		});
 	}
-
-
-
 	protected void setTopPanel(JButton buttonLeft, JLabel label, JButton buttonRight) {
 		topPanel.removeAll();
 		topPanel.add(buttonLeft);
