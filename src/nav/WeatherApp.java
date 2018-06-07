@@ -159,6 +159,7 @@ public class WeatherApp extends AppBaseFrame {
 					constructPage();
 				}
 		}.execute();
+		
 		Timer t = new javax.swing.Timer(500, new ActionListener(){
 
 		    public void actionPerformed(ActionEvent e){
