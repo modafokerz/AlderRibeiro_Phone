@@ -32,7 +32,7 @@ import components.KeyboardButton;
 @SuppressWarnings("serial")
 public class PinScreen extends BaseFrame {
 	private String text = "";
-	private JLabel topText = new JLabel("Insérez votre code");
+	private JLabel topText = new JLabel("Insérez code : 0000");
 	private JPanel topTextPanel = new JPanel();
 	private JPanel pinPanel = new JPanel();
 	private JLabel pinEntered = new JLabel();

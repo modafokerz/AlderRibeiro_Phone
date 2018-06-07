@@ -119,10 +119,8 @@ public class WeatherApp extends AppBaseFrame {
 	private void httpRequest() {
 		
 		
-		System.out.println("blabla 1");
 		
 		// Tâche effectuée sur un thread différent de manière à n'avoir aucune latence d'application
-		// Youhou,,,, ca marche enfin !! putin je suis trop content mdr
 		new SwingWorker <String, Void>() {
 
 				@Override
@@ -148,7 +146,7 @@ public class WeatherApp extends AppBaseFrame {
 				
 				@Override
 				protected void done () {
-					System.out.println("Done");
+					System.out.println("HTTP Request Done");
 					APILoading = false;
 					weatherAppPanel.remove(loadingLabel);
 					
@@ -190,7 +188,6 @@ public class WeatherApp extends AppBaseFrame {
 //		
 		
 		
-		System.out.println("blabla 2");
 	}
 	
 	
