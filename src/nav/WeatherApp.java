@@ -32,7 +32,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import components.BackgroundPanel;
-import components.WeatherJPanel;
 import objects.WeatherCity;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
