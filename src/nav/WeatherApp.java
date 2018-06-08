@@ -14,9 +14,12 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 
@@ -46,7 +49,7 @@ import okhttp3.Response;
 public class WeatherApp extends AppBaseFrame {
 	
 	
-	private String ville = "Sierre";
+	private String ville = "";
 	private String villeStatus = "";
 	private String villeTemp = "";
 	
@@ -56,9 +59,6 @@ public class WeatherApp extends AppBaseFrame {
 	private int loadingCount = 1;
 	
 	private String apiKey = "0761f6abebe05ed6cd5e1985cdd37791";
-	private double[] sierreCoordinates = new double[2];
-	private double[] sionCoordinates = new double[2];
-	private double[] aigleCoordinates = new double[2];
 	
 	private double[] cityCoordinates = new double[2];
 	
@@ -69,6 +69,7 @@ public class WeatherApp extends AppBaseFrame {
 	private JPanel topAppPanel = new JPanel();
 	private JButton cityChoiceButton = new JButton("Choisir une autre ville");
 	private JLabel cityLabel;
+	private String contenuFichier = "";
 	private JLabel cityStatus;
 	private JLabel cityTemp;
 	private JPanel coordinatesPanel = new JPanel();
@@ -80,14 +81,6 @@ public class WeatherApp extends AppBaseFrame {
 		super();
 		
 		// latitude + longitude
-		sierreCoordinates[0] = 46.2923;
-		sierreCoordinates[1] = 7.5323;
-		
-		sionCoordinates[0] = 46.2312;
-		sionCoordinates[1] = 7.3589;
-		
-		aigleCoordinates[0] = 46.3179;
-		aigleCoordinates[1] = 6.9689;
 		
 		
 		
@@ -97,9 +90,9 @@ public class WeatherApp extends AppBaseFrame {
 		
 		
 		
-		// Serialization du choix de la ville à faire
-		cityCoordinates[0]=sierreCoordinates[0];
-		cityCoordinates[1]=sierreCoordinates[1];
+		
+		// Choix de la ville à prendre la météo
+		getCityCoordinates();
 		
 		remove(centerPanel);
 		add(weatherAppPanel, BorderLayout.CENTER);
@@ -155,7 +148,8 @@ public class WeatherApp extends AppBaseFrame {
 					constructPage();
 				}
 		}.execute();
-//		
+
+		
 //		Timer t = new javax.swing.Timer(500, new ActionListener(){
 //
 //		    public void actionPerformed(ActionEvent e){
@@ -190,7 +184,34 @@ public class WeatherApp extends AppBaseFrame {
 		
 	}
 	
-	
+	private void getCityCoordinates() {
+		File fichierVille = new File("saves/choixVille.txt");
+		
+		try {
+			FileReader fr = new FileReader(fichierVille);
+			BufferedReader bfr = new BufferedReader(fr);
+			
+			try {
+				contenuFichier = bfr.readLine();
+				bfr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		contenuFichier = contenuFichier.toLowerCase();
+		if(contenuFichier.equals("aigle")) {
+			cityCoordinates[0] = 46.3179;
+			cityCoordinates[1] = 6.9689;
+		} else if (contenuFichier.equals("sion")) {
+			cityCoordinates[0] = 46.2312;
+			cityCoordinates[1] = 7.3589;
+		} else {
+			cityCoordinates[0] = 46.2923;
+			cityCoordinates[1] = 7.5323;
+		}
+	}
 	
 	private void constructPage() {
 		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");
@@ -199,7 +220,7 @@ public class WeatherApp extends AppBaseFrame {
 		double celciusTemp = (farenheitTemp -32) * 5/9;
 		
 		villeTemp = Double.toString(Math.round(celciusTemp));
-		
+		ville = contenuFichier.toUpperCase();
 		cityLabel = new JLabel(ville);
 		cityStatus = new JLabel(villeStatus);
 		cityTemp = new JLabel(villeTemp + " °C");
@@ -220,6 +241,16 @@ public class WeatherApp extends AppBaseFrame {
 		cityChoiceButton.setContentAreaFilled(false);
 		cityChoiceButton.setOpaque(false);
 		cityChoiceButton.setBorder(new LineBorder(Color.WHITE, 3));
+		cityChoiceButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				
+				new CityChoiceScreen();
+				WeatherApp.this.dispose();
+				
+			}
+			
+		});
 		
 		topAppPanel.add(cityChoiceButton);
 		
