@@ -37,6 +37,7 @@ public class CityChoiceScreen extends AppBaseFrame {
 	private CCSButton sierre = new CCSButton("Sierre");
 	
 	public CityChoiceScreen() {
+		super();
 		remove(centerPanel);
 		cPanel.setLayout(new FlowLayout());
 		cPanel.setPreferredSize(new Dimension(600,550));

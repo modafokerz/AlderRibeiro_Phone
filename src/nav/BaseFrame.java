@@ -39,6 +39,7 @@ public class BaseFrame extends JFrame implements KeyListener{
 	
 	
 	public BaseFrame() {
+		super();
 		// Paramètres de base de la JFrame
 		setUndecorated(true);
 		setVisible(true);

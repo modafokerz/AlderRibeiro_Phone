@@ -149,39 +149,6 @@ public class WeatherApp extends AppBaseFrame {
 				}
 		}.execute();
 
-		
-//		Timer t = new javax.swing.Timer(500, new ActionListener(){
-//
-//		    public void actionPerformed(ActionEvent e){
-//			    	
-//		    	switch(loadingCount) {
-//				case 1 : loadingLabel.setText("Loading.");
-//						break;
-//				case 2 : loadingLabel.setText("Loading..");
-//				break;
-//				case 3 :  loadingLabel.setText("Loading...");
-//				break;
-//				}
-//				
-//			
-//				if(loadingCount==3) {
-//					loadingCount=1;
-//				} else {
-//					loadingCount++;
-//				}
-//				revalidate();
-//				repaint();	
-//		    	
-//			    }
-//			});
-//		while(APILoading) {
-//			
-//				t.start();
-//			
-//		}
-//		
-		
-		
 	}
 	
 	private void getCityCoordinates() {
