@@ -27,6 +27,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -190,28 +193,33 @@ public class WeatherApp extends AppBaseFrame {
 		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");
 		villeStatus = (String) currentWeather.get("summary");
 		String icon = (String) currentWeather.get("icon");
+		
 		Object farenheitTemp = currentWeather.get("temperature");
-
-		double celciusTemp = ((double)farenheitTemp -32) * 5/9;
-		double rainProb = (double) currentWeather.get("precipProbability");
+		double celciusTemp = toCelcius((double)farenheitTemp);
+		
+		Object rainProbability = currentWeather.get("precipProbability");
+		double rainProb = (double) rainProbability;
 		rainProb = rainProb*100;
 		String cityRainProb =  String.valueOf(rainProb);
 
-		double windSpeed = (double) currentWeather.get("windSpeed");
-		windSpeed = Math.round(windSpeed * 1.60934*100); // Conversion en Km/h environ
-		windSpeed = windSpeed/100; 
+		Object windSpeed = currentWeather.get("windSpeed");
+		double dWindSpeed = (double) windSpeed;
+		dWindSpeed = Math.round((double)dWindSpeed * 1.60934*100); // Conversion en Km/h environ
+		dWindSpeed = dWindSpeed/100; 
 		String cityWindSpeed = String.valueOf(windSpeed);
+		
+		
+		
 		villeTemp = Double.toString(Math.round(celciusTemp));
 		ville = contenuFichier.toUpperCase();
 		cityLabel = new JLabel(ville);
 		cityStatus = new JLabel(villeStatus);
 
-
-
-
+		
 		weatherAppPanel.add(topAppPanel);
+		
 		// Top App Weather Panel construction !
-		topAppPanel.setPreferredSize(new Dimension(600, 400));
+		topAppPanel.setPreferredSize(new Dimension(600, 390));
 		topAppPanel.setOpaque(false);
 		topAppPanel.setLayout(new FlowLayout());
 
@@ -268,11 +276,11 @@ public class WeatherApp extends AppBaseFrame {
 		JPanel cityTempPanel = new JPanel();
 		cityTempPanel.setPreferredSize(new Dimension(600,150));
 		cityTempPanel.setLayout(new FlowLayout());
-
+		System.out.println(icon);
 		String iconPath = "img/weatherApp/weather-icons/"+icon+".png";
-		Image  img = new ImageIcon(iconPath).getImage();
+		
 
-		BackgroundPanel CTPleft = new BackgroundPanel(img);
+		BackgroundPanel CTPleft = new BackgroundPanel(iconPath);
 		CTPleft.setPreferredSize(new Dimension(100,100));
 		CTPleft.setOpaque(false);
 
@@ -305,50 +313,52 @@ public class WeatherApp extends AppBaseFrame {
 		topAppPanel.setOpaque(false);
 
 
-		weatherAppPanel.add(topAppPanel, BorderLayout.CENTER);
+		weatherAppPanel.add(topAppPanel);
 
 		// Bottom App Panel construction !
-		bottomAppPanel.setPreferredSize(new Dimension(600, 300));
+		bottomAppPanel.setPreferredSize(new Dimension(600, 310));
 		bottomAppPanel.setLayout(new FlowLayout());
-		bottomAppPanel.setOpaque(false);
-
-		JLabel csLabel = new JLabel("Les prochains jours");
-		csLabel.setPreferredSize(new Dimension(600,50));
-		csLabel.setOpaque(false);
-		csLabel.setFont(new Font("Impact", Font.PLAIN, 30));
-		csLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		bottomAppPanel.add(csLabel);
+		bottomAppPanel.setOpaque(true);
+		bottomAppPanel.setBackground(new Color(0,0,0,65));
 
 		JSONObject nextDaysInfo = (JSONObject) forecastInfo.get("daily");
 		JSONArray nextDaysData = (JSONArray) nextDaysInfo.get("data");
-		JSONObject day_1 = (JSONObject) nextDaysData.get(0);
+
 		JPanel nextDaysPanel = new JPanel();
 		nextDaysPanel.setLayout(new GridLayout(3,3));
-		nextDaysPanel.setPreferredSize(new Dimension(600,250));
+		nextDaysPanel.setPreferredSize(new Dimension(600,310));
 		nextDaysPanel.setOpaque(false);
 
-		JLabel tomorrowLabel = new JLabel("Demain");
-		int count = 1;
-		nextDaysPanel.add(tomorrowLabel);
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E");
+		
 		for(int i = 0; i < 3; i++) {
+			// Ajout du jour suivant au panel
+			LocalDate nextDay = today.plus(i+1, ChronoUnit.DAYS);
+			String formattedString = nextDay.format(formatter);
+			JLabel tomorrowLabel = new JLabel(formattedString);
+			tomorrowLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			tomorrowLabel.setForeground(Color.white);
+			tomorrowLabel.setFont(new Font("Arial", Font.BOLD, 30));
+			nextDaysPanel.add(tomorrowLabel);
+			
+			// Icone choisie selon l'API
 			JSONObject dayInfo = (JSONObject) nextDaysData.get(i);
 			String iconsPath = "img/weatherApp/weather-icons/";
 			String icon1_path = iconsPath+dayInfo.get("icon")+".png";
-			System.out.println(icon1_path);
 			BackgroundPanel day_icon = new BackgroundPanel(icon1_path, 100,100);
 			nextDaysPanel.add(day_icon);
 			
+			// Température maximale et minimale issue de l'API
 			NextDayTemp day_temp = new NextDayTemp();
 			double day_maxTemp = (double) dayInfo.get("temperatureHigh");
 			double day_minTemp = (double) dayInfo.get("temperatureLow");
 			
-			day_temp.setTemps(day_minTemp, day_maxTemp);
+			day_temp.setTemps(day_maxTemp, day_minTemp);
 			nextDaysPanel.add(day_temp);
 			
-			if(count<=2)
-			nextDaysPanel.add(new JLabel("test"));
 			
-			count++;
 		}
 
 		
@@ -356,10 +366,16 @@ public class WeatherApp extends AppBaseFrame {
 		
 
 		bottomAppPanel.add(nextDaysPanel);
-		weatherAppPanel.add(bottomAppPanel,BorderLayout.SOUTH);
+		weatherAppPanel.add(bottomAppPanel);
 
 		revalidate();
 		repaint();
+	}
+
+
+
+	private double toCelcius(double farenheitTemp) {
+		return  (farenheitTemp-32) * 5/9;
 	}
 
 
@@ -391,20 +407,37 @@ public class WeatherApp extends AppBaseFrame {
 		public NextDayTemp() {
 			super();
 			setLayout(new GridLayout(2,0));
+			setOpaque(false);
 		}
 
-		protected void setTemps(double tempMin, double tempMax) {
+		protected void setTemps(double tempMax, double tempMin) {
 			this.tempMin = tempMin;
 			this.tempMax = tempMax;
 			constructObject();
 		}
 
 		private void constructObject() {
-			JLabel tempMn = new JLabel(String.valueOf(tempMin));
-			JLabel tempMx = new JLabel(String.valueOf(tempMax));
-
-			add(tempMn);
+			tempMin = Math.round(toCelcius(tempMin));
+			tempMax = Math.round(toCelcius(tempMax));
+			
+			int IntTempMax = (int)(tempMax);
+			int IntTempMin = (int)(tempMin);
+			
+			JLabel tempMx = new JLabel(String.valueOf(IntTempMax));
+			tempMx.setForeground(Color.white);
+			tempMx.setFont(new Font("Arial", Font.BOLD, 20));
+			tempMx.setHorizontalAlignment(SwingConstants.CENTER);
+			tempMx.setVerticalAlignment(SwingConstants.BOTTOM);
+			
+			JLabel tempMn = new JLabel(String.valueOf(IntTempMin));
+			tempMn.setForeground(new Color(211,211,211));
+			tempMn.setFont(new Font("Arial", Font.PLAIN, 15));
+			tempMn.setHorizontalAlignment(SwingConstants.CENTER);
+			tempMn.setVerticalAlignment(SwingConstants.TOP);
+			
 			add(tempMx);
+			add(tempMn);
+			
 		}
 	}
 

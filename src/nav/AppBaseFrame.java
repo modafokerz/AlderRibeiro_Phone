@@ -8,6 +8,7 @@ package nav;
 
 import java.awt.BorderLayout;
 
+
 import components.HomeBottomPanel;
 
 @SuppressWarnings("serial")
@@ -18,7 +19,7 @@ public class AppBaseFrame extends BaseFrame {
 		super();
 		add(bp,BorderLayout.SOUTH);
 		
-		
+
 		bp.addListener(this);
 		bp.addLockListener(this);
 	}

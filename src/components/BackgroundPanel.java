@@ -63,20 +63,20 @@ public class BackgroundPanel extends JPanel{
 		 * @author Nelson
 		 * @param élément graphique.
 		 */
-		if(imgPanel==null) {
+		if(width==0 || height == 0) {
+			width = this.getWidth();
+			height = this.getHeight();
+		}
+		
+		if(imgPanel==null) {	
 			try {
 				Image img = ImageIO.read(new File(str));
 				g.drawImage(img, 0, 0, this);
-				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+				g.drawImage(img, 0, 0, width, height, this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else {
-			if(width==0 || height == 0) {
-				width = this.getWidth();
-				height = this.getHeight();
-			}
-			
+
 			g.drawImage(imgPanel, 0, 0, this);
 			g.drawImage(imgPanel, 0, 0, width, height, this);
 		}
