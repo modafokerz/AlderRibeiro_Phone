@@ -77,6 +77,8 @@ public class BackgroundPanel extends JPanel{
 				e.printStackTrace();
 			}
 
+			
+		} else {
 			g.drawImage(imgPanel, 0, 0, this);
 			g.drawImage(imgPanel, 0, 0, width, height, this);
 		}
