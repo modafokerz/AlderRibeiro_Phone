@@ -12,6 +12,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -35,7 +37,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import components.BackgroundPanel;
-import objects.WeatherCity;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -183,6 +184,7 @@ public class WeatherApp extends AppBaseFrame {
 	private void constructPage() {
 		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");
 		villeStatus = (String) currentWeather.get("summary");
+		String icon = (String) currentWeather.get("icon");
 		double farenheitTemp = (double) currentWeather.get("temperature");
 		double celciusTemp = (farenheitTemp -32) * 5/9;
 		
@@ -250,9 +252,28 @@ public class WeatherApp extends AppBaseFrame {
 		cityStatus.setFont(new Font("Impact", Font.PLAIN, 30));
 		topAppPanel.add(cityStatus);
 		
-		cityTemp.setPreferredSize(new Dimension(600,200));
+		JPanel cityTempPanel = new JPanel();
+		cityTempPanel.setPreferredSize(new Dimension(600,200));
+		cityTempPanel.setLayout(new GridLayout(1,2));
 		
-		topAppPanel.add(cityTemp);
+		String iconPath = "img/weatherApp/weather-icons/"+icon+".png";
+		BackgroundPanel CTPleft = new BackgroundPanel(iconPath);
+		CTPleft.setOpaque(false);
+		
+		JPanel CTPRight = new JPanel();
+		CTPRight.setLayout(new GridLayout(2,0));
+		CTPRight.setOpaque(false);
+		
+		JLabel tAct = new JLabel("Temp. actuelle");
+		tAct.setHorizontalAlignment(SwingConstants.CENTER);
+		cityTemp.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		CTPRight.add(tAct);
+		CTPRight.add(cityTemp);
+		
+		cityTempPanel.add(CTPleft);
+		cityTempPanel.add(CTPRight);
+		topAppPanel.add(cityTempPanel);
 		
 		weatherAppPanel.add(topAppPanel, BorderLayout.CENTER);
 		
