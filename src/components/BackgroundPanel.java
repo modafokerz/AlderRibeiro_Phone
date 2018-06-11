@@ -21,6 +21,8 @@ public class BackgroundPanel extends JPanel{
 	 * @param string qui définit le path pour aller chercher l'image à mettre en fond d'écran.
 	 */
 	private String str;
+	private int width;
+	private int height;
 	private Image imgPanel = null;
 
 	
@@ -31,6 +33,17 @@ public class BackgroundPanel extends JPanel{
 		 * @author Nelson
 		 */
 		this.str = str;
+	}
+	
+	public BackgroundPanel(String str, int width, int height) {
+		/**
+		 * Constructeur qui transmet à la classe le chemin d'accès à l'image à mettre en fond d'écran.
+		 * @param chemin d'accès à l'image sous forme de string.
+		 * @author Nelson
+		 */
+		this.str = str;
+		this.width = width;
+		this.height = height;
 	}
 
 	public BackgroundPanel(Image img) {
@@ -59,8 +72,13 @@ public class BackgroundPanel extends JPanel{
 				e.printStackTrace();
 			}
 		} else {
+			if(width==0 || height == 0) {
+				width = this.getWidth();
+				height = this.getHeight();
+			}
+			
 			g.drawImage(imgPanel, 0, 0, this);
-			g.drawImage(imgPanel, 0, 0, this.getWidth(), this.getHeight(), this);
+			g.drawImage(imgPanel, 0, 0, width, height, this);
 		}
 	}
 }
