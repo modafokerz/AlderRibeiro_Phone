@@ -208,17 +208,44 @@ public class WeatherApp extends AppBaseFrame {
 		String icon = (String) currentWeather.get("icon");
 		
 		Object farenheitTemp = currentWeather.get("temperature");
-		double celciusTemp = toCelcius((double)farenheitTemp);
+		double celciusTemp = 0;
+		
+
+		// les If else suivants règlent le problème fourni par la réponse de l'API : Long / Double conversion
+		
+		if(farenheitTemp instanceof Double) {
+			celciusTemp = toCelcius((double)farenheitTemp);
+		} else if (farenheitTemp instanceof Long) {
+			System.out.println("Long température !!");
+			celciusTemp = Long.valueOf(farenheitTemp.toString()).doubleValue();
+		}
+			
+			
 		
 		Object rainProbability = currentWeather.get("precipProbability");
-		double rainProb = (double) rainProbability;
-		rainProb = rainProb*100;
-		String cityRainProb =  String.valueOf(rainProb);
+		double rainProb = 0;
+		
+		if(rainProbability instanceof Double) {
+			rainProb = (double) rainProbability;
+		} else if (rainProbability instanceof Long) {
+			System.out.println("Long rain Prob !!");
+			rainProb = Long.valueOf(rainProbability.toString()).doubleValue();
+		}
+		
+		rainProb = Math.round(rainProb*100);
+		String cityRainProb = String.valueOf(rainProb);
 
 		Object windSpeed = currentWeather.get("windSpeed");
-		double dWindSpeed = (double) windSpeed;
-		dWindSpeed = Math.round((double)dWindSpeed * 1.60934*100); // Conversion en Km/h environ
+		double dWindSpeed = 0;
+		if (windSpeed instanceof Double) {
+			dWindSpeed = (double) windSpeed;
+		} else if (windSpeed instanceof Long) {
+			System.out.println("Long windspeed");
+			dWindSpeed = Long.valueOf(windSpeed.toString()).doubleValue();
+		}
+		dWindSpeed = Math.round(dWindSpeed * 1.60934*100); // Conversion en Km/h
 		dWindSpeed = dWindSpeed/100; 
+		
 		String cityWindSpeed = String.valueOf(windSpeed);
 		
 		

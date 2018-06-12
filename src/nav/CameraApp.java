@@ -140,7 +140,19 @@ public class CameraApp extends AppBaseFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(wCam.isOpen()) {
-				File file = new File(String.format("img/gallery/Wphoto-%d.jpg", System.currentTimeMillis()));
+				
+				File galleryFile = new File("img/gallery");
+				int nbFiles = galleryFile.listFiles().length;
+				String nbFilesStr;
+				
+				if(nbFiles<10)
+					nbFilesStr = "00"+nbFiles;
+				else if (nbFiles<100)
+					nbFilesStr = "0"+nbFiles;
+				else
+					nbFilesStr = String.valueOf(nbFiles);
+				
+				File file = new File(String.format("img/gallery/%s_Wphoto.jpg", nbFilesStr));
 				try {
 					ImageIO.write(wCam.getImage(), "JPG", file);
 				} catch (IOException e) {
