@@ -22,6 +22,13 @@ import components.HomeIcon;
 
 @SuppressWarnings("serial")
 public class HomeScreen extends AppBaseFrame {
+	/*
+	 * Fenêtre Home avec les icones.
+	 * Elle hérite de AppBaseFrame de manière a avoir le haut (batterie, etc.) et le bas(bouton Home et lock)
+	 * 
+	 * Affiche les icones des applications dans un gridLayout.
+	 * Lorsqu'on clique sur une icone elle nous mène vers l'application de celle-ci.
+	 */
 
 	private BackgroundPanel newCenterPanel = new BackgroundPanel("img/HomeBackground2.jpg");
 

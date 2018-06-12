@@ -1,12 +1,11 @@
 /*
- * Exercice FIG HES-SO (Sierre)
+ * Smartphone 602_F FIG HES-SO (Sierre)
  * Auteur : Nelson Ribeiro Teixeira
  * Date de création : 4 juin 2018
  * Date de modification : /
  */
 package nav;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -28,6 +27,15 @@ import components.topLabel;
 
 @SuppressWarnings("serial")
 public class GalleryPicScreen extends GalleryScreen {
+	/**
+	 * Classe qui gère l'image affichée de la gallerie. Elle hérite de GalleryScreen et a 2 boutons en haut
+	 * l'un permet de revenir à la gallerie normale et l'autre d'effacher l'image affichée.
+	 * 
+	 * De plus, l'image est affichée en "plein écran"
+	 * et des informations sur celle-ci sont affichées plus bas. (Date, nom, etc.)
+	 *
+	 * @author Nelson
+	 */
 	private GalleryPicture chosenPic;
 	private String[] pictureInformations;
 
@@ -43,6 +51,14 @@ public class GalleryPicScreen extends GalleryScreen {
 	private JScrollPane scrollImage;
 
 	public GalleryPicScreen(GalleryPicture picture) {
+		/**
+		 * Constructeur de la classe qui prend en entrée l'image a afficher.
+		 * Il construit les composants de la fenêtre et les actions des boutons. (Effacer et retour).
+		 * Le bouton effacer gère aussi le nom des images de manière à ce que la continuité de celles-ci ne se perde pas.
+		 * Les images du début restent toujours au début, etc.
+		 * 
+		 * @param Image à afficher.
+		 */
 		chosenPic = picture;
 		pictureInformations = chosenPic.getPictureInformations();
 		picName = new topLabel(pictureInformations[0]);
@@ -173,13 +189,23 @@ public class GalleryPicScreen extends GalleryScreen {
 	}
 
 	public class InfoLabel extends JLabel {
+		/**
+		 * Class qui gère les label des informations de l'image pour qu'ils aient tous la même apparence.
+		 * @param str à afficher dans le label
+		 */
 
 		public InfoLabel(String str) {
+			/**
+			 * Appele la méthode super de JLabel et la méthode construction qui construit les composants.
+			 */
 			super(str);
 			construction();
 		}
 
 		private void construction() {
+			/**
+			 * Construit le JLabel (Formes etc.)
+			 */
 			setPreferredSize(new Dimension(200,50));
 
 			setForeground(Color.black);
@@ -189,12 +215,22 @@ public class GalleryPicScreen extends GalleryScreen {
 	}
 
 	public class PicInfoLabel extends JLabel {
+		/**
+		 * Classe qui gère le JLabel des Infos de l'image (Titre à gauche) 
+		 * @param str a afficher à l'intérieur.
+		 */
 		public PicInfoLabel(String str) {
+			/*
+			 * Constructeur qui fait appel à la méthode construction et au super(constructeur) de JLabel
+			 */
 			super(str);
 			construction();
 		}
 
 		private void construction() {
+			/*
+			 * Construit le JLabel.
+			 */
 			setPreferredSize(new Dimension(350,50));
 			setFont(new Font("Arial", Font.PLAIN, 13));
 		}

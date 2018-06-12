@@ -1,5 +1,5 @@
 /*
- * Exercice FIG HES-SO (Sierre)
+ * Smartphone 602_F FIG HES-SO (Sierre)
  * Auteur : Nelson Ribeiro Teixeira
  * Date de création : 3 juin 2018
  * Date de modification : /
@@ -7,11 +7,9 @@
 package nav;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
 import java.awt.GridLayout;
@@ -34,11 +32,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import components.topButton;
@@ -47,6 +42,21 @@ import components.topLabel;
 
 @SuppressWarnings("serial")
 public class GalleryScreen extends AppBaseFrame {
+	/**
+	 * Application de la gallerie qui affiche les images dans le dossier gallery de l'application.
+	 * 
+	 * Elle est composée ded la manière suivante :
+	 * En haut : un Panel qui a 2 boutons et un Label.
+	 * Le bouton de gauche sert a enclecher la fonction de recherche de la gallerie (GalleryRechercheScreen).
+	 * Le label : Titre de l'application : Galerie
+	 * Le bouton de droite sert à ajouter une photo à la galerie depuis un dossier local.
+	 * 
+	 * Ensuite un panel du centre ou jscroll qui affiche les images de la gallerie dans un GridLayout.
+	 * Lorsqu'on clique sur une image elle nous mene vers GalleryPicScreen qui donne des détails sur l'image
+	 * sélectionnée.(GalleryPicScreen).
+	 * 
+	 * @author Nelson
+	 */
 
 	private JPanel galleryPanel = new JPanel();
 	private JPanel topPanel = new JPanel();

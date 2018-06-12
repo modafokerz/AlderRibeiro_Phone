@@ -1,5 +1,5 @@
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 7 juin 2018
 * Date de modification : /
@@ -22,7 +22,20 @@ import components.topButton;
 import components.topLabel;
 
 
+@SuppressWarnings("serial")
 public class GalleryRechercheScreen extends GalleryScreen {
+	/**
+	 * Ecran de recherche pour la gallerie
+	 * Permet d'effectuer des recherches par date ou par nom pour les images de la gallerie.
+	 * 
+	 * Il est composé des boutons du haut (retour) un titre : recherche d'images et un bouton recherche.
+	 * Ainsi que deux champs à remplir nom ou date qui génère tous deux des messages d'erreurs si les conditions
+	 * de recherche ne sont pas respectées.
+	 * 
+	 * Exemple : recherche par nom ET par date ou aucun champ rempli.
+	 * 
+	 * @author Nelson
+	 */
 	private topButton returnButton = new topButton("img/icons/return-icon.png");
 	private topLabel rechercheLabel = new topLabel("Recherche d'images");
 	private topButton rechercheButton = new topButton("img/icons/search_icon.png");
@@ -32,6 +45,9 @@ public class GalleryRechercheScreen extends GalleryScreen {
 	private boolean error2AlreadyPrint = false;
 	
 	public GalleryRechercheScreen() {
+		/**
+		 * Constructeur qui définit les éléments et les construit à l'instanciation.
+		 */
 		setTopPanel(returnButton,rechercheLabel,rechercheButton);
 		
 		returnButton.addActionListener(new ActionListener()
@@ -118,6 +134,10 @@ public class GalleryRechercheScreen extends GalleryScreen {
 	}
 	
 	protected class GRSPanel extends JPanel {
+		/**
+		 * Class qui gère le panel de la GalleryRechercheScreen ou il aura a l'intérieur le champ
+		 * à remplir ainsi que le titre.
+		 */
 		public GRSPanel() {
 			setPreferredSize(new Dimension(600,100));
 			setLayout(new FlowLayout());
@@ -125,6 +145,10 @@ public class GalleryRechercheScreen extends GalleryScreen {
 	}
 	
 	protected class GRSLabel extends JLabel {
+		/**
+		 * Label à l'intérieur de GRSPanel ou titre du champ.
+		 * @param str titre à afficher.
+		 */
 		public GRSLabel(String str) {
 			super(str);
 			setPreferredSize(new Dimension(200,100));
@@ -133,6 +157,9 @@ public class GalleryRechercheScreen extends GalleryScreen {
 	}
 	
 	protected class GRSTextField extends JTextField {
+		/*
+		 * Champ à remplir pour le GRSPanel.
+		 */
 		public GRSTextField() {
 			super();
 			setPreferredSize(new Dimension(350,100));
