@@ -161,7 +161,13 @@ public class ContactEdition extends AppBaseFrame {
 		photoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				staticOldContact.setNom(tfNom.getText());
+				staticOldContact.setPrenom(tfPrenom.getText());
+				staticOldContact.setTel(tfTel.getText());
+				staticOldContact.setAdresse(tfAdresse.getText());
+				staticOldContact.setEmail(tfEmail.getText());
 				new GalleryScreen(true);
+				ContactEdition.this.dispose();
 			}
 		});
 
@@ -300,6 +306,8 @@ public class ContactEdition extends AppBaseFrame {
 	public String getOldContactPhotoPath() {
 		return staticOldContact.getPhotoPath();
 	}
+	
+	
 
 	/**
 	 * Permet de prendre en compte les changements faits dans les textfields
@@ -309,7 +317,7 @@ public class ContactEdition extends AppBaseFrame {
 	 * @see Contact
 	 */
 	public void setNewContact() {
-		this.newContact = new Contact(getOldContactPhotoPath(), tfNom.getText(), tfPrenom.getText(), tfTel.getText(),
+		this.newContact = new Contact(staticOldContact.getPhotoPath(), tfNom.getText(), tfPrenom.getText(), tfTel.getText(),
 				tfAdresse.getText(), tfEmail.getText());
 	}
 
@@ -322,5 +330,9 @@ public class ContactEdition extends AppBaseFrame {
 	 */
 	private static Image getResizedPhoto(Image image) {
 		return image.getScaledInstance( 160, 160,  java.awt.Image.SCALE_SMOOTH ) ;
+	}
+	
+	public static Contact getStaticOldContact() {
+		return staticOldContact;
 	}
 }

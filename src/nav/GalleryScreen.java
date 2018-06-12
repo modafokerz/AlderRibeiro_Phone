@@ -443,7 +443,8 @@ public class GalleryScreen extends AppBaseFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					ContactEdition.setOldContactPhotoPath(path);
-					ContactEdition.updatePhoto();
+					//ContactEdition.updatePhoto();
+					new ContactEdition(ContactEdition.getStaticOldContact());
 					GalleryScreen.this.dispose();
 				}
 			});
