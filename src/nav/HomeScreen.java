@@ -40,6 +40,10 @@ public class HomeScreen extends AppBaseFrame {
 	private HomeIcon blocNotesIcon;
 	
 	public HomeScreen () {
+		/**
+		 * Constructeur de l'application qui instancie les HomeIcon (classe) qui sont des boutons menant vers
+		 * les applications correspondantes. Les dispose en gridlayout.
+		 */
 
 		// Mis à jour du panel du centre afin de corriger le bug de l'image rognée
 		remove(centerPanel);

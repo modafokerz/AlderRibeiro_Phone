@@ -39,23 +39,21 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import components.topButton;
 import components.topLabel;
 
-
 @SuppressWarnings("serial")
 public class GalleryScreen extends AppBaseFrame {
 	/**
-	 * Application de la gallerie qui affiche les images dans le dossier gallery de l'application.
+	 * Galerie du smartphone, elle affiche les images enregistrées dans le dossier gallery du smartphone.
+	 * Elle est composée en 2 parties :
+	 * la 1ère : Panel du top avec 2 boutons et un Jlabel.
+	 * Bouton de gauche : Enclenche la fonction de recherche de l'application (GalleryRechercheScreen).
+	 * Label : Titre de l'application : Galerie
+	 * Bouton de droite : Permet d'ajouter une photo à la galerie depuis un dossier local.
 	 * 
-	 * Elle est composée ded la manière suivante :
-	 * En haut : un Panel qui a 2 boutons et un Label.
-	 * Le bouton de gauche sert a enclecher la fonction de recherche de la gallerie (GalleryRechercheScreen).
-	 * Le label : Titre de l'application : Galerie
-	 * Le bouton de droite sert à ajouter une photo à la galerie depuis un dossier local.
+	 * 2ème partie :
+	 * Panel en grid layout qui affiche les images existantes dans le dossier gallery du smartphone.
+	 * Lorsqu'on clique sur l'une d'elles cela nous mène vers le GalleryPicScreen de cette même image.
 	 * 
-	 * Ensuite un panel du centre ou jscroll qui affiche les images de la gallerie dans un GridLayout.
-	 * Lorsqu'on clique sur une image elle nous mene vers GalleryPicScreen qui donne des détails sur l'image
-	 * sélectionnée.(GalleryPicScreen).
-	 * 
-	 * @author Nelson
+	 * @author Nelson 
 	 */
 
 	private JPanel galleryPanel = new JPanel();
@@ -65,27 +63,50 @@ public class GalleryScreen extends AppBaseFrame {
 	private JScrollPane jscroll;
 	
 	private File [] pictures;
-	private boolean ContactFlag;
+	private boolean contactFlag;
 	// Eléments du topPanel
 	private topButton recherche = new topButton("img/icons/search_icon.png");
 	private topLabel galerieLabel = new topLabel ("Galerie");
 	private	topButton addPic = new topButton("img/icons/add_icon.png");
 
 	public GalleryScreen() {
-		
+		/**
+		 * Constructeur par défaut de l'application qui l'instancie en false (paramètre permettant de savoir
+		 * si la galerie est instanciée depuis les contacts ou non).
+		 */
+		this(false);
 
+		
+	}
+	
+	public GalleryScreen(boolean contactFlag) {
+		/**
+		 * Construit la frame selon le paramètre. Si c'est true elle n'a pas les boutons d'options et elle
+		 * fait une autre tache au clic. (Ajoute l'image aux contacts).
+		 * @param boolean pour savoir si l'application est instanciée depuis les contacts ou non.
+		 */
+		
 		// construction de la Frame
-		construction();
+		construction(contactFlag);
 	}
 	
 	
 	public GalleryScreen(String str, boolean isSearchByDate) {
+		/**
+		 * Constructeur qui permet d'instancier la gallerie depuis la recherche d'images.
+		 * @param String ou texte à rechercher dans les images.
+		 * @param boolean pour savoir si c'est instancié depuis la fenêtre de recherche.
+		 */
 		remove(centerPanel);
 		
 		researchConstruction(str, isSearchByDate);
 	}
 	
 	private void researchConstruction(String str, boolean isSearchByDate) {
+		/**
+		 * Change la construction de la frame si jamais elle est instanciée depuis la fonction de recherche.
+		 * Les boutons sont modifiées en Retour et l'autre est supprimé.
+		 */
 		
 		baseConstruction();
 		topPanel.setLayout(new FlowLayout());
@@ -117,7 +138,7 @@ public class GalleryScreen extends AppBaseFrame {
 			pictures = galleryFolder.listFiles();
 			for (int i = 0; i < pictures.length; i++) {
 				
-				GalleryPicture picture = new GalleryPicture(pictures[i].getPath());
+				GalleryPicture picture = new GalleryPicture(pictures[i].getPath(), contactFlag);
 				String [] pictureInfos = picture.getPictureInformations();
 				
 				
@@ -158,16 +179,25 @@ public class GalleryScreen extends AppBaseFrame {
 	}
 
 
-	private void construction() {
+	private void construction(boolean contactFlag) {
+		/**
+		 * Change la construction de la frame si jamais elle est instanciée depuis la fenêtre de contacts.
+		 * supprime les boutons et change l'action des images au clic en les attribuant au contact.
+		 */
 		remove(centerPanel);
 		baseConstruction();
 
 
 		// Construction du panel du top
 		topPanel.setLayout(new FlowLayout());
-		topPanel.add(recherche);
+		if(!contactFlag) {
+			topPanel.add(recherche);
+		}
 		topPanel.add(galerieLabel);
-		topPanel.add(addPic);
+		if(!contactFlag) {
+			topPanel.add(addPic);
+		}
+		
 
 		
 		// Construction du panel contenant les photos
@@ -179,7 +209,7 @@ public class GalleryScreen extends AppBaseFrame {
 			pictures = galleryFolder.listFiles();
 			for (int i = 0; i < pictures.length; i++) {
 
-				picturesPanel.add(new GalleryPicture(pictures[i].getPath()));
+				picturesPanel.add(new GalleryPicture(pictures[i].getPath(), contactFlag));
 			}
 		}
 
@@ -244,6 +274,9 @@ public class GalleryScreen extends AppBaseFrame {
 	}
 	
 	private void baseConstruction() {
+		/**
+		 * Paramètres de base de la frame appelés à la construction à tous les constructeurs.
+		 */
 		topPanel.setPreferredSize(new Dimension(600,100));
 		galleryPanel.setPreferredSize(new Dimension(600,650));
 		galleryPanel.setLayout(new FlowLayout());
@@ -252,6 +285,13 @@ public class GalleryScreen extends AppBaseFrame {
 	}
 	
 	protected void setTopPanel(JButton buttonLeft, JLabel label, JButton buttonRight) {
+		/**
+		 * Permet de définir le panel du top en modifiant ces éléments
+		 * Est appelée par la fenêtre de recherche par exemple.
+		 * @param JButton le bouton à mettre en haut à gauche.
+		 * @param JLabel le label du centre.
+		 * @param JButton le bouton à mettre en haut à droite.
+		 */
 		topPanel.removeAll();
 		topPanel.add(buttonLeft);
 		topPanel.add(label);
@@ -260,17 +300,34 @@ public class GalleryScreen extends AppBaseFrame {
 	}
 	
 	protected void setMidPanel(JScrollPane panel) {
+		/*
+		 * Permet de changer le panel du centre avec le Jscroll en paramètre
+		 * @param JScrollPane panel à mettre.
+		 * Enlève le panel actuel et le remplace par le JScrollPane
+		 * Méthode appelée par la méthode de recherche aussi.
+		 */
 		galleryPanel.remove(jscroll);
 		galleryPanel.add(panel, BorderLayout.CENTER);
 	}
 	
 	protected void setMidPanel(JPanel panel) {
+		/*
+		 * Permet de changer le panel du centre avec le panel en paramètre
+		 * @param JPanel panel à mettre.
+		 * Enlève le panel actuel et le remplace par le JPanel en paramètre
+		 * Méthode appelée par la méthode de recherche aussi.
+		 */
 		galleryPanel.remove(jscroll);
 		galleryPanel.add(panel, BorderLayout.CENTER);
 	}
 
 
 	class GalleryPicture extends JButton {
+		/**
+		 * Classe qui définit les attributs de chaque photo
+		 * Nom, date de création, etc. 
+		 * La libraire BasicFilesAttributes a été utilisée pour avoir ces informations.
+		 */
 
 
 		private String name;
@@ -280,7 +337,12 @@ public class GalleryScreen extends AppBaseFrame {
 		private Image img;
 		private Image fullImg;
 
-		public GalleryPicture(String path) {
+		public GalleryPicture(String path, boolean contactFlag) {
+			/**
+			 * Constructeur de la GalleryPicture qui construit l'image et les informations dont on a besoin.
+			 * @param path vers l'image de la GalleryPicture
+			 * @param boolean contactFlag pour savoir si c'cest appelé depuis les contact.
+			 */
 			setPreferredSize(new Dimension(200,183));
 			setSize(200,183);
 			this.path = path;
@@ -291,7 +353,11 @@ public class GalleryScreen extends AppBaseFrame {
 			name = path.replace(galleryPath, "");
 			name = name.substring(4, name.length()-4);
 
-			addActionListener();
+			if(contactFlag) {
+				addContactActionListener();
+			}else {
+				addActionListener();
+			}
 
 			try {
 				img = ImageIO.read(new File(path));
@@ -313,6 +379,10 @@ public class GalleryScreen extends AppBaseFrame {
 		}
 
 		private String getExtension(String path) {
+			/*
+			 * Méthode privée qui retourne l'extension d'un fichier
+			 * @param path vers le fichier dont on veut conaitre l'extension.
+			 */
 			File file = new File(path);
 			String fileName = file.getName();
 			if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
@@ -321,6 +391,10 @@ public class GalleryScreen extends AppBaseFrame {
 		}
 
 		private Image getImageIcon (Image img) {
+			/*
+			 * Retourne une Icone de l'image en paramètre (Pour la galerie).
+			 * @param image a resizer.
+			 */
 			BufferedImage resizedImg = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2 = resizedImg.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -344,7 +418,10 @@ public class GalleryScreen extends AppBaseFrame {
 		}
 
 		private Image getFullImage (Image img) {
-			
+			/*
+			 * Méthode privée qui retourne l'image en FullScreen de l'image en paramètres
+			 * @param image à afficher en plein écran.
+			 */
 			BufferedImage resizedImg = new BufferedImage(500, 450, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g2 = resizedImg.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -353,9 +430,31 @@ public class GalleryScreen extends AppBaseFrame {
 			return resizedImg;
 		}
 
-		
+		/**
+		 * Ajoute l'action listener pour les boutons lors d'un changement
+		 * d'image d'un contact
+		 * 
+		 * Met à jour le chemin d'accès de la photo du contact actuellement modifié.
+		 * 
+		 * @see ContactEdition
+		 */
+		private void addContactActionListener() {
+			addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ContactEdition.setOldContactPhotoPath(path);
+					ContactEdition.updatePhoto();
+					GalleryScreen.this.dispose();
+				}
+			});
+		}
 
 		private String getCreationDate(String path) {
+			/*
+			 * Méthode privée qui retourne la date de création d'un fichier
+			 * @param path vers le fichier dont on veut la date de création.
+			 * 
+			 */
 			BasicFileAttributes attr = null;
 			try {
 				attr = Files.readAttributes(Paths.get(path), BasicFileAttributes.class);
@@ -371,6 +470,11 @@ public class GalleryScreen extends AppBaseFrame {
 
 
 		protected String[] getPictureInformations() {
+			/**
+			 * Méthode qui retourne les informations de l'instance de GalleryPicture
+			 * Elle retoune un tableau de String avec les informations suivantes:
+			 * Name,CreationDate,Path,Extension.
+			 */
 			String [] pictureInformations= new String[4];
 			pictureInformations[0]=name;
 			pictureInformations[1]=creationDate;
@@ -381,6 +485,9 @@ public class GalleryScreen extends AppBaseFrame {
 		}
 		
 		protected Image getPicImage() {
+			/**
+			 * Getter de fullImg.
+			 */
 			return fullImg;
 		}
 	}

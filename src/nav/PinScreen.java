@@ -23,7 +23,7 @@ import javax.swing.border.LineBorder;
 import components.KeyboardButton;
 
 /*
- * Exercice FIG HES-SO (Sierre)
+ * Smartphone 602_F FIG HES-SO (Sierre)
  * Auteur : Nelson Ribeiro Teixeira
  * Date de création : 30 avr. 2018
  * Date de modification : /
@@ -31,6 +31,18 @@ import components.KeyboardButton;
 
 @SuppressWarnings("serial")
 public class PinScreen extends BaseFrame {
+	/**
+	 * PinScreen : fenêtre ou on doit mettre le code pour accéder à l'application
+	 * par défaut c'est 0000.
+	 * 
+	 * La fenêtre est construite de la facon suivante.
+	 * Elle hérite de BaseFrame (fond d'écran et barre du haut)
+	 * puis elle en haut un jlabel avec le titre : Insérez code.
+	 * 
+	 * Ensuite elle affiche le code entré et plus bas un
+	 * panel en gridlayout avec les chiffres, etc. pour pouvoir entrer le code.
+	 * 
+	 */
 	private String text = "";
 	private JLabel topText = new JLabel("Insérez code : 0000");
 	private JPanel topTextPanel = new JPanel();
@@ -41,6 +53,9 @@ public class PinScreen extends BaseFrame {
 	private JButton returnButton = new JButton("RETOUR");
 
 	public PinScreen() {
+		/*
+		 * Constructeur de la classe qui construit les éléments et leur apparence.
+		 */
 		super();
 		this.remove(centerPanel);
 		setBackground(Color.WHITE);
@@ -229,6 +244,10 @@ public class PinScreen extends BaseFrame {
 	}
 
 	protected void verifyCodeEntered() {
+		/**
+		 * Methode permettant de vérifer le code entrer, s'il est faux
+		 * modifie le texte du haut en CODE INVALIDE.
+		 */
 		if (pinEntered.getText().equals("0000")) {
 			dispose();
 			new HomeScreen();
@@ -239,6 +258,9 @@ public class PinScreen extends BaseFrame {
 	}
 
 	public void updateText(String str) {
+		/**
+		 * Méthode permettant aux boutons de update au clic le texte affiché.
+		 */
 
 		if (pinEntered.getText().length() < 4) {
 			switch(str) {
@@ -272,6 +294,9 @@ public class PinScreen extends BaseFrame {
 	}
 	
 	protected void eraseLastCarac() {
+		/*
+		 * Méthode privée appelée par le bouton effacer qui supprime le dernier caractère entré.
+		 */
 		String actualPin = pinEntered.getText();
 		String updatedText ="";
 		

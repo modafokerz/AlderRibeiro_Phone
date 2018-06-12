@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 26 avr. 2018
 * Date de modification : /
@@ -24,12 +24,25 @@ import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class LockScreen extends BaseFrame {
+	/**
+	 * LockScreen ou fenêtre de départ du smartphone
+	 * Elle hérite de BaseFrame pour avoir le fond d'écran et la barre du haut (batterie, etc.)
+	 * 
+	 * Elle a en plus un bouton en bas et l'heure en plein milieu.
+	 * Le bouton du bas mène vers la fenêtre de PinScreen ou le pin doit être entré pour arriver au homescreen.
+	 * 
+	 * @author Nelson
+	 */
 	private JLabel hourText = new JLabel();
 	
 	private JPanel bottomPanel = new JPanel();
 	private JButton unlockButton = new JButton("CLICK TO UNLOCK");
 	
 	public LockScreen() {
+		/**
+		 * Constructeur de la classe qui construit les éléments de la façon voulue
+		 * Heure et bouton.
+		 */
 		// Configure le JLabel de manière à ce qu'il affiche l'heure actuelle
 		super();
 		turnOffTopHour();
@@ -116,6 +129,9 @@ public class LockScreen extends BaseFrame {
 	
 	//refresh l'heure toutes les secondes depuis le main
 	public void updateSeconds() {
+		/*
+		 * Permet de update les secondes de l'heure.
+		 */
 		Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(" HH mm : ss");
         hourText.setText(sdf.format(cal.getTime()));

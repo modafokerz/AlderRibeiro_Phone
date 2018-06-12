@@ -1,5 +1,5 @@
 /*
- * Exercice FIG HES-SO (Sierre)
+ * Smartphone 602_F FIG HES-SO (Sierre)
  * Auteur : Nelson Ribeiro Teixeira
  * Date de création : 24 mai 2018
  * Date de modification : /
@@ -12,33 +12,22 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
-import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 
 import org.json.simple.JSONArray;
@@ -57,7 +46,24 @@ import okhttp3.Response;
 
 @SuppressWarnings("serial")
 public class WeatherApp extends AppBaseFrame {
-
+	 /**
+	  * Application météo du smartphone utilisant plusieurs libraires :
+	  * La première c'est OkHTTP qui permet d'effectuer des requêtes HTTP de manière très simple.
+	  * La deuxième ce'st JSONObject qui permet de convertir une string en objet JSON.
+	  * 
+	  * Elle est construite de manière suivante : Elle hérite de AppBaseFrame de manière a avoir la barre du bas et du haut
+	  * avec les bouton home et lock etc.
+	  * 
+	  * Ensuite elle a un panel du haut qui a un bouton menant vers le choix de la ville à afficher : CityChoiceScreen.
+	  * Et affiche toutes les informations relatives à la ville actuelle : Température, image correspondante à la méto
+	  * bref resumé : Plui, beau temps ou autre selon la météo
+	  * Vitesse du vent et probabilité de pluie.
+	  * 
+	  * Le panel du bas quant a lui gère les informations relatives à la météo des jours suivants.
+	  * Avec un logo correspondant et la température maximale et minimale de ce jour.
+	  * 
+	  * Cette application utilise l'API de DarkSky : https://darksky.net/
+	  */
 
 	private String ville = "";
 	private String villeStatus = "";
@@ -87,19 +93,13 @@ public class WeatherApp extends AppBaseFrame {
 
 
 	public WeatherApp() {
+		/**
+		 * Constructeur de l'application, construit les éléments et effectue la requête http.
+		 * Une fois que la requête est terminée remplace le tableau loading par la météo.
+		 */
 		super();
 
 		// latitude + longitude
-
-
-
-
-
-
-
-
-
-
 		// Choix de la ville à prendre la météo
 		getCityCoordinates();
 
@@ -119,6 +119,10 @@ public class WeatherApp extends AppBaseFrame {
 	}
 
 	private void httpRequest() {
+		/*
+		 * Requête HTTP vers l'API de darksky, une fois qu'elle est terminée remplace le paneau Loading par la météo
+		 * 
+		 */
 
 
 
@@ -161,6 +165,12 @@ public class WeatherApp extends AppBaseFrame {
 	}
 
 	private void getCityCoordinates() {
+		/**
+		 * Lit le fichier texte choixVille.txt
+		 * de manière à savoir quelle ville on souhaite afficher et donne au programme
+		 * les coordonnées de la ville (latitude + longitude) nécessaires pour faire la requête
+		 * HTTP à l'API.
+		 */
 		File fichierVille = new File("saves/choixVille.txt");
 
 		try {
@@ -190,6 +200,9 @@ public class WeatherApp extends AppBaseFrame {
 	}
 
 	private void constructPage() {
+		/**
+		 * Méthode qui permet de construire la page avec les infos recueillies.
+		 */
 		JSONObject currentWeather = (JSONObject) forecastInfo.get("currently");
 		villeStatus = (String) currentWeather.get("summary");
 		String icon = (String) currentWeather.get("icon");
@@ -375,12 +388,19 @@ public class WeatherApp extends AppBaseFrame {
 
 
 	private double toCelcius(double farenheitTemp) {
+		/**
+		 * convertit une température double de Farenheit à Celcius.
+		 */
 		return  (farenheitTemp-32) * 5/9;
 	}
 
 
 
 	class TitleLabel extends JLabel {
+		/**
+		 * Label titre de l'application du panel du haut pour la température etc. (apparence même).
+		 * @param str message à afficher.
+		 */
 		public TitleLabel(String str) {
 			super(str);
 			setHorizontalAlignment(SwingConstants.CENTER);
@@ -391,6 +411,10 @@ public class WeatherApp extends AppBaseFrame {
 	}
 
 	class DataLabel extends JLabel {
+		/**
+		 * Label pour les données à afficher du panel du haut (sous les titres).
+		 * @param str donnée à afficher.
+		 */
 		public DataLabel(String str) {
 			super(str);
 			setHorizontalAlignment(SwingConstants.CENTER);
@@ -401,22 +425,39 @@ public class WeatherApp extends AppBaseFrame {
 	}
 
 	class NextDayTemp extends JPanel {
+		/**
+		 * Classe regroupant les données nécessaires relatives aux journées suivantes
+		 * Température min
+		 * Température max 
+		 * 
+		 * ainsi que l'apparence de celui-ci (Jpanel).
+		 */
 		private double tempMin;
 		private double tempMax;
 
 		public NextDayTemp() {
+			/*
+			 * Constructeur de la classe qui met le layout désiré et la met en transparent.
+			 */
 			super();
 			setLayout(new GridLayout(2,0));
 			setOpaque(false);
 		}
 
 		protected void setTemps(double tempMax, double tempMin) {
+			/*
+			 * Setter : permet d'attributer à l'objet les données que l'on veut pour les températures.
+			 * puis construit l'objet (panel).
+			 */
 			this.tempMin = tempMin;
 			this.tempMax = tempMax;
 			constructObject();
 		}
 
 		private void constructObject() {
+			/**
+			 * Construit l'objet une fois que l'on lui a attribué les données nécessaires
+			 */
 			tempMin = Math.round(toCelcius(tempMin));
 			tempMax = Math.round(toCelcius(tempMax));
 			
