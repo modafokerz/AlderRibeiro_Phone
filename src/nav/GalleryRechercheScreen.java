@@ -18,7 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import nav.GalleryScreen.topButton;
+import components.topButton;
+import components.topLabel;
+
 
 public class GalleryRechercheScreen extends GalleryScreen {
 	private topButton returnButton = new topButton("img/icons/return-icon.png");

@@ -117,9 +117,8 @@ public class BaseFrame extends JFrame implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == e.VK_ESCAPE) {
-		      
-		      BaseFrame.this.dispose();
-		      } 
+			System.exit(0);
+		} 
 	}
 
 	@Override

@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import components.BackgroundPanel;
+import components.topButton;
+import components.topLabel;
 
 @SuppressWarnings("serial")
 public class GalleryPicScreen extends GalleryScreen {

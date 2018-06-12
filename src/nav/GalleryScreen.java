@@ -41,8 +41,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import nav.GalleryScreen.topButton;
-import nav.GalleryScreen.topLabel;
+import components.topButton;
+import components.topLabel;
+
 
 @SuppressWarnings("serial")
 public class GalleryScreen extends AppBaseFrame {
@@ -255,38 +256,6 @@ public class GalleryScreen extends AppBaseFrame {
 		galleryPanel.add(panel, BorderLayout.CENTER);
 	}
 
-	class topButton extends JButton {
-		private String path;
-
-		public topButton(String str) {
-			path = str;
-
-			setPreferredSize(new Dimension(100,70));
-			setCursor(new Cursor(Cursor.HAND_CURSOR));
-			setOpaque(false);
-			setContentAreaFilled(false);
-			setBorder(new LineBorder(Color.BLACK, 1));
-
-
-			try {
-				Image img = ImageIO.read(new File(path));
-				setIcon(new ImageIcon(img));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
-
-	class topLabel extends JLabel {
-		public topLabel(String str) {
-			super(str);
-			setPreferredSize(new Dimension(350,100));
-			setHorizontalAlignment(SwingConstants.CENTER);
-			setFont(new Font("Impact", Font.PLAIN, 35));
-		}
-	}
 
 	class GalleryPicture extends JButton {
 

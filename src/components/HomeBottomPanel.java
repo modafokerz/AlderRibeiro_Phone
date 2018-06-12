@@ -55,6 +55,14 @@ public class HomeBottomPanel extends JPanel {
         	});
 	}
 	
+	public void addHomeAction(ActionListener a) {
+		homeButton.addActionListener(a);
+	}
+	
+	public void addLockAction(ActionListener a) {
+		lockButton.addActionListener(a);
+	}
+	
 	public void addLockListener(AppBaseFrame ap) {
 		/**
 		 * Méthode qui ajoute l'action listener au lock button et qui prend en entrée une application pour permettre sa fermeture lorsque 

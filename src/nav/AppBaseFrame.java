@@ -7,7 +7,7 @@
 package nav;
 
 import java.awt.BorderLayout;
-
+import java.awt.event.ActionListener;
 
 import components.HomeBottomPanel;
 
@@ -22,5 +22,13 @@ public class AppBaseFrame extends BaseFrame {
 
 		bp.addListener(this);
 		bp.addLockListener(this);
+	}
+	
+	public void addHomeAction(ActionListener a) {
+		bp.addHomeAction(a);
+	}
+	
+	public void addLockAction(ActionListener a) {
+		bp.addLockAction(a);
 	}
 }

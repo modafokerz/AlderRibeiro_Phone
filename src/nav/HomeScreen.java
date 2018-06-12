@@ -29,7 +29,9 @@ public class HomeScreen extends AppBaseFrame {
 	private HomeIcon contactsIcon;
 	private HomeIcon weatherIcon;
 	private HomeIcon calculatorIcon;
-
+	private HomeIcon cameraIcon;
+	private HomeIcon blocNotesIcon;
+	
 	public HomeScreen () {
 
 		// Mis à jour du panel du centre afin de corriger le bug de l'image rognée
@@ -117,8 +119,49 @@ public class HomeScreen extends AppBaseFrame {
 		});
 
 		newCenterPanel.add(calculatorIcon);
+		
+		// Icone caméra
+		try {
+			Image img = ImageIO.read(new File("img/icons/camera-icon.png"));
+			cameraIcon = new HomeIcon("Caméra",new ImageIcon(img));
 
-		for(int i = 0; i < 20; i++)
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		
+		// Icone bloc notes
+		
+		try {
+			Image img = ImageIO.read(new File("img/icons/blocnotes-icon.png"));
+			blocNotesIcon = new HomeIcon("Bloc-notes",new ImageIcon(img));
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		cameraIcon.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new CameraApp();
+				HomeScreen.this.dispose();
+			}
+			
+		});
+
+		newCenterPanel.add(cameraIcon);
+		
+		
+		blocNotesIcon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				HomeScreen.this.dispose();
+			}
+		}); 
+		
+		newCenterPanel.add(blocNotesIcon);
+		
+		for(int i = 0; i < 18; i++)
 			newCenterPanel.add(new JLabel());
 
 
