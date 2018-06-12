@@ -1,5 +1,5 @@
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 8 juin 2018
 * Date de modification : /
@@ -31,12 +31,21 @@ import components.BackgroundPanel;
 
 @SuppressWarnings("serial")
 public class CityChoiceScreen extends AppBaseFrame {
+	/**
+	 * Fenêtre permettant le choix de la ville dont on veut afficher la météo
+	 * Les boutons vont simplement mettre dans un fichier texte le nom de la ville qu'on veut voir afficher
+	 * L'application météo lit ce fichier et affiche la météo de la ville choisie.
+	 * @author Nelson
+	 */
 	private BackgroundPanel cPanel = new BackgroundPanel("img/weatherApp/weatherAppBackground.png");
 	private CCSButton aigle = new CCSButton("Aigle");
 	private CCSButton sion = new CCSButton("Sion");
 	private CCSButton sierre = new CCSButton("Sierre");
 	
 	public CityChoiceScreen() {
+		/**
+		 * Constructeur de la classe qui instancie et construit les composants de la fenêtre.
+		 */
 		super();
 		remove(centerPanel);
 		cPanel.setLayout(new FlowLayout());
@@ -56,6 +65,10 @@ public class CityChoiceScreen extends AppBaseFrame {
 	}
 	
 	class CCSButton extends JButton {
+		/**
+		 * Classe qui définit les boutons de la fenêtre et leur comportement : écriture dans un fichier texte
+		 * de la ville choisie. puis relance automatiquement l'application météo.
+		 */
 		private String cityName;
 		public CCSButton(String str) {
 			super(str);

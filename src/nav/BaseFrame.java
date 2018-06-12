@@ -1,7 +1,6 @@
 package nav;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -15,7 +14,7 @@ import components.Kernel32;
 import components.TopJLabel;
 
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 16 avr. 2018
 * Date de modification : /
@@ -23,6 +22,11 @@ import components.TopJLabel;
 
 @SuppressWarnings("serial")
 public class BaseFrame extends JFrame implements KeyListener{
+	/**
+	 * Frame de base qui définit le fond d'écran ainsi que la barre du haut comprenant la batterie
+	 * la date et un JLabel qui simule l'opérateur.
+	 * @author Nelson
+	 */
 	
 	// Le panel du Top et ses composants
 	private JPanel topPanel = new JPanel();
@@ -39,6 +43,10 @@ public class BaseFrame extends JFrame implements KeyListener{
 	
 	
 	public BaseFrame() {
+		/**
+		 * Constructeur de la classe qui initalise les composants et les construit.
+		 */
+		
 		super();
 		// Paramètres de base de la JFrame
 		setUndecorated(true);
@@ -111,11 +119,19 @@ public class BaseFrame extends JFrame implements KeyListener{
 	}
 	
 	public void turnOffTopHour() {
+		/**
+		 * méthode permettant de rendre invisible l'heure affichée dans la barre du haut
+		 * (utilisée dans le LockScreen).
+		 */
 		currentHour.setVisible(false);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void keyPressed(KeyEvent e) {
+		/**
+		 * Métode permettant de éteindre le programme lorsqu'on appuie sur ECHAP.
+		 */
 		if(e.getKeyCode() == e.VK_ESCAPE) {
 			System.exit(0);
 		} 
@@ -123,10 +139,16 @@ public class BaseFrame extends JFrame implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		/**
+		 * Métode héritée du KeyListener, inutile ici.
+		 */
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		/**
+		 * Métode héritée du KeyListener, inutile ici.
+		 */
 		
 	}
 	

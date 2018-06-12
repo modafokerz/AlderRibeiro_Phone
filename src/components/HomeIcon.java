@@ -23,7 +23,6 @@ public class HomeIcon extends JButton {
 	public HomeIcon (String str, ImageIcon ic) {
 		/**
 		 * Constructeur qui donne à l'icone la forme qu'on veut à l'instanciation.
-		 * @author Nelson
 		 * @param string qui donne le nom de l'icone.
 		 * @param ImageIcone qui définit l'icone.
 		 */

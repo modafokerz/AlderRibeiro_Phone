@@ -24,12 +24,12 @@ public class KeyboardButton extends JButton {
 	 * @author Nelson
 	 */
 	private PinScreen ps;
+	@SuppressWarnings("unused")
 	private CalculatorApp ca;
 	
 	public KeyboardButton(String string, PinScreen ps){
 		/**
 		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
-		 * @author Nelson
 		 * @param string représentant le nom à donner au bouton.
 		 * @param pinscreen, instance du pinscreen qui y update un composant JLabel.
 		 */
@@ -42,7 +42,6 @@ public class KeyboardButton extends JButton {
 	private void construction() {
 		/**
 		 * méthode qui construit l'apparence du composant.
-		 * @author Nelson
 		 */
 		setFocusPainted(false);
 		setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -52,6 +51,7 @@ public class KeyboardButton extends JButton {
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		addMouseListener(new MouseAdapter() {
             
+			// Action au hover de la souris en entrée
             public void mouseEntered(MouseEvent me) {
             	
             	setContentAreaFilled(true);
@@ -61,6 +61,8 @@ public class KeyboardButton extends JButton {
             	
             	
             }
+            
+         // Action au hover de la souris en sortie
             public void mouseExited(MouseEvent me) {
             	
             	setContentAreaFilled(false);

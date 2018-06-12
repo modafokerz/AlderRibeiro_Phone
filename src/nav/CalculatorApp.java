@@ -9,16 +9,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import components.*;
-
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -26,24 +20,52 @@ import components.KeyboardButton;
 
 
 /*
-* Projet Smartphone
-* Auteur : Jean-Marie Alder
-* Date de création : 6.6.18
-* Date de modification :
-* Description : Application calculatrice standard, 4 opérations (+,-,*,/)
-*/
-
+ * Projet Smartphone
+ * Auteur : Jean-Marie Alder
+ * Date de création : 6.6.18
+ * Date de modification :
+ * Description : Application calculatrice standard, 4 opérations (+,-,*,/)
+ */
+/**
+ * Classe CalculatorApp
+ * Est appelée lorsque l'icone "calculatrice" du "homeScreen" est cliquée.
+ * 
+ * Son design est constitué de :
+ * -un TopPanel avec :
+ *  - Le titre "Calculatrice"
+ *  - L'historique des calculs
+ *  
+ * -Un panel pour les "inputs" et les calculs + le bouton Cancel
+ * 
+ * -Un panel avec les 16 touches de la calculatrice
+ * 
+ * Ses attrbuts sont :
+ * - un résultat
+ * - un opérateur (+,-,*,/) sous forme de int
+ * - deux variables a et b
+ * - Un champ texte pour garder l'historique
+ * 
+ * Note : gère les exceptions comme la division par zéro, la virgule unique
+ * et le nombre max. de chiffres autorisés. Gère aussi les gros nombres
+ * sous la forme scientifique.
+ * 
+ * @author Jean-Marie Alder
+ *
+ */
+@SuppressWarnings("serial")
 public class CalculatorApp extends AppBaseFrame{
 
 	private double result;
 	private int operator;
 	private double a;
 	private double b;
+	private String lastOperation;
 
 	private JPanel calculatorPanel = new JPanel();
 
 	private String text = "";
 	private JLabel topText = new JLabel("Calculatrice");
+	private JLabel lastInput = new JLabel("0");
 	private JPanel topTextPanel = new JPanel();
 	private JPanel inputPanel = new JPanel();
 	private JLabel input = new JLabel();
@@ -69,9 +91,13 @@ public class CalculatorApp extends AppBaseFrame{
 	private JButton bc = new JButton("C");
 	private KeyboardButton bpoint = new KeyboardButton(".", this);
 
-
-
-
+	/**
+	 * Constructeur de la calculatrice
+	 * 
+	 * Design de la frame et initialisation des champs et boutons.
+	 * 
+	 * @see CalculatorApp#addActionListener(JButton)
+	 */
 	public CalculatorApp() {
 		super();
 		bc.setPreferredSize(new Dimension(100,100));
@@ -105,16 +131,21 @@ public class CalculatorApp extends AppBaseFrame{
 		this.remove(centerPanel);
 		setBackground(Color.WHITE);
 		// Gère le top Panel comprenant le texte
-		topText.setPreferredSize(new Dimension(600, 100)); //Taille du composant (taille du JLabel)
+		topText.setPreferredSize(new Dimension(600, 50)); //Taille du composant (taille du JLabel)
 		topText.setHorizontalAlignment(SwingConstants.CENTER);
 		topText.setVerticalAlignment(SwingConstants.TOP);
 		topText.setBackground(Color.WHITE);
-		topText.setFont(new Font("Arial Black", Font.PLAIN, 35));
-		
+		topText.setFont(new Font("Arial Black", Font.PLAIN, 25));
 
-		topTextPanel.add(topText,BorderLayout.CENTER);
-		topTextPanel.setBackground(Color.white);
+		lastInput.setPreferredSize(new Dimension(600, 48));
+		lastInput.setHorizontalAlignment(SwingConstants.CENTER);
+		lastInput.setFont(new Font("Arial Black", Font.PLAIN, 16));
+
 		topTextPanel.setPreferredSize(new Dimension(600,100));
+		topTextPanel.setLayout(new FlowLayout());
+		topTextPanel.add(topText);
+		topTextPanel.add(lastInput);
+		topTextPanel.setBackground(Color.white);
 
 		inputPanel.setLayout( new FlowLayout());
 		inputPanel.add(topTextPanel);
@@ -159,16 +190,35 @@ public class CalculatorApp extends AppBaseFrame{
 		add(calculatorPanel,BorderLayout.CENTER);
 
 	}
-
-
+	
+	/**
+	 * Défini le texte (input de chiffres) à afficher
+	 * sur la calculatrice
+	 * @param text	le texte à afficher
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	/**
+	 * Retourne la chaine de texte des inputs
+	 * @return	le texte à afficher sur la calculatrice
+	 */
 	public String getText() {
-		// TODO Auto-generated method stub
 		return text;
 	}
 
+	/**
+	 * Ajoute l'actionListener à tous les boutons.
+	 * 
+	 * Lorsqu'un bouton est cliqué. son nom (identifiant) est récupéré
+	 * et en fonction, fait l'action correspondante.
+	 * 
+	 * 
+	 * @param button	Le bouton implémentant l'actionListener
+	 * 
+	 * @throws NumberFormatException	Si le format du nombre n'est pas correct.
+	 */
 	private void addActionListener(JButton button) {
 		button.addActionListener(new ActionListener()
 		{
@@ -223,30 +273,54 @@ public class CalculatorApp extends AppBaseFrame{
 
 				if(e.getSource()==bplus)
 				{
-					a=Double.parseDouble(getText());
-					operator=1;
-					setText("");
+					try {
+						a=Double.parseDouble(getText());
+						operator=1;
+						setText("");
+						lastOperation = Double.toString(a) + " +"; 
+					}catch(NumberFormatException f) {
+
+					}
+
 				} 
 
 				if(e.getSource()==bmoins)
 				{
-					a=Double.parseDouble(getText());
-					operator=2;
-					setText("");
+					try {
+						a=Double.parseDouble(getText());
+						operator=2;
+						setText("");
+						lastOperation = Double.toString(a) + " -";
+					}catch(NumberFormatException f) {
+
+					}
+
 				}
 
 				if(e.getSource()==bmult)
 				{
-					a=Double.parseDouble(getText());
-					operator=3;
-					setText("");
+					try {
+						a=Double.parseDouble(getText());
+						operator=3;
+						setText("");
+						lastOperation = Double.toString(a) + " *";
+					}catch(NumberFormatException f) {
+
+					}
+
 				}
 
 				if(e.getSource()==bdiv)
 				{
-					a=Double.parseDouble(getText());
-					operator=4;
-					setText("");
+					try {
+						a=Double.parseDouble(getText());
+						operator=4;
+						setText("");
+						lastOperation = Double.toString(a) + " /";
+					}catch(NumberFormatException f) {
+
+					}
+
 				}
 
 				if(e.getSource()==bequ)
@@ -255,7 +329,10 @@ public class CalculatorApp extends AppBaseFrame{
 						//pour contourner l'erreur lorsque "=" est utilisé deux fois de suite
 						b=Double.parseDouble(getText());
 					}
-					catch(NumberFormatException f) {}
+					catch(NumberFormatException f) {
+						lastOperation = "0";
+						operator = 5;
+					}
 
 					switch(operator)
 					{
@@ -268,15 +345,26 @@ public class CalculatorApp extends AppBaseFrame{
 					case 3: result=a*b;
 					break;
 
-					case 4: result=a/b;
-					break;
+					case 4: 
+						if(b != 0) {
+							result=a/b;
+						}else {
+							lastOperation += " " + Double.toString(b);
+							setText("NaN");
+							operator = 5;
+						}
+						break;
 
 					default: result=0;
 					break;
 					}
-					operator =5; //permet de savoir quand "=" est utilisé
 					a=result;
-					setText(""+result);
+					if(operator != 5) {
+						setText(""+result);
+						lastOperation += " " + Double.toString(b);
+					}
+
+					operator =5; //permet de savoir quand "=" est utilisé
 				}
 
 				if(e.getSource()==bc) {
@@ -284,11 +372,12 @@ public class CalculatorApp extends AppBaseFrame{
 
 				}
 
-				if(getText().endsWith(".0")) {
+				if(getText().endsWith(".0") && !(getText().startsWith(".0"))) {
 					//Supprime ".0" à la fin d'un nombre sans chiffres après la virgule
 					setText(getText().substring(0, getText().length()-2));
 				}
 				input.setText(text);
+				lastInput.setText(lastOperation);
 			}
 		});
 	}

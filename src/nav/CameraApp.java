@@ -7,21 +7,15 @@
 package nav;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
@@ -33,10 +27,18 @@ import components.topLabel;
 
 
 
+@SuppressWarnings("serial")
 public class CameraApp extends AppBaseFrame {
 	/**
 	 * Application caméra permettant de prendre des photos depuis la webcam de l'ordinateure et de les importer automatiquement dans
 	 * la gallerie. La libraire gitHub de sarxos a été utilisée : https://github.com/sarxos/webcam-capture/
+	 * 
+	 * Elle dispose d'un panneau du haut avec 2 boutons et un Label "Caméra"
+	 * Le bouton de gauche permet d'éteindre et d'allumer l'accès à la caméra
+	 * celui de droite de prendre en photo.
+	 * 
+	 * L'image est automatiquement stockée dans la gallerie du smartphone.
+	 * 
 	 * @author Nelson
 	 */
 	
@@ -56,6 +58,9 @@ public class CameraApp extends AppBaseFrame {
 	private WebcamPanel wCamPanel = new WebcamPanel(wCam, new Dimension(600,550),false);
 	
 	public CameraApp() {
+		/**
+		 * Constructeur de la classe : Composants construits.
+		 */
 		wCam.setViewSize(WebcamResolution.VGA.getSize());
 		
 		
@@ -86,6 +91,11 @@ public class CameraApp extends AppBaseFrame {
 	}
 	
 	public class OnOffCam implements ActionListener {
+		/**
+		 * Class ActionListener qui définit le comportement du bouton on off en haut à gauche de l'application.
+		 * Allume la caméra au premier clic et l'éteint au second puis
+		 * remplace le panel du centre (caméra) par un panel avec un message(caméra éteinte).
+		 */
 		private boolean isOff = true;
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -121,6 +131,11 @@ public class CameraApp extends AppBaseFrame {
 	}
 	
 	public class Capture implements ActionListener {
+		/**
+		 * class ActionListener qui définit le comportement du bouton de capture de la photo.
+		 * celui-ci capture l'image affichée et la met directement dans le dossier contenant les images de la gallerie.
+		 * Puis enlève le panel avec la caméra et le remplace par un panel avec un message(photo enregistrée.)
+		 */
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {

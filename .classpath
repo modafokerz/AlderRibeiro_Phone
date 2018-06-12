@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="weatherLib/webcam-capture-0.3.13-20180202.082008-3.jar"/>
 	<classpathentry kind="lib" path="libs/bridj-0.7.0.jar"/>
 	<classpathentry kind="lib" path="libs/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

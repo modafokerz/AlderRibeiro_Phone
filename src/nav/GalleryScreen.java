@@ -55,6 +55,7 @@ public class GalleryScreen extends AppBaseFrame {
 	private JScrollPane jscroll;
 	
 	private File [] pictures;
+	private boolean ContactFlag;
 	// Eléments du topPanel
 	private topButton recherche = new topButton("img/icons/search_icon.png");
 	private topLabel galerieLabel = new topLabel ("Galerie");
@@ -66,6 +67,7 @@ public class GalleryScreen extends AppBaseFrame {
 		// construction de la Frame
 		construction();
 	}
+	
 	
 	public GalleryScreen(String str, boolean isSearchByDate) {
 		remove(centerPanel);

@@ -27,7 +27,6 @@ public class HomeBottomPanel extends JPanel {
 	public HomeBottomPanel() {
 		/**
 		 * constructeur de la classe permettant la construction des éléments à l'instanciation (taille, etc.).
-		 * @author Nelson
 		 */
 		setLayout(new FlowLayout(FlowLayout.CENTER, 50, 10));
 		setSize(600,100);
@@ -41,8 +40,7 @@ public class HomeBottomPanel extends JPanel {
 		/**
 		 * Méthode qui ajoute l'action listener au home button et qui prend en entrée une application pour permettre sa fermeture lorsque 
 		 * le homescreen est instancié.
-		 * @author Nelson
-		 * @param instance de l'application qui a appelé le bouton home.
+		 * @param instancie de l'application qui a appelé le bouton home.
 		 */
 		homeButton.addActionListener(new ActionListener()
         {
@@ -67,7 +65,6 @@ public class HomeBottomPanel extends JPanel {
 		/**
 		 * Méthode qui ajoute l'action listener au lock button et qui prend en entrée une application pour permettre sa fermeture lorsque 
 		 * le lockscreen est instancié.
-		 * @author Nelson
 		 * @param instance de l'application qui a appelé le bouton lock.
 		 */
 		lockButton.addActionListener(new ActionListener()

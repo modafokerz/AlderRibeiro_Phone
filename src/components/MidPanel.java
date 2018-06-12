@@ -14,8 +14,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+@SuppressWarnings("serial")
 public class MidPanel extends JPanel {
+	/**
+	 * Panel de l'application Camera utilisé pour afficher le message lorsque la caméra est éteinte
+	 * ou qu'une photo a été prise.
+	 * @autor Nelson
+	 */
+	
 	public MidPanel(String str) {
+		/**
+		 * Constructeur du panel qui lui donne la forme souhaitée et affiche la String
+		 * passée en paramètre sous forme de message au milieu du panel.
+		 * @param String message à afficher.
+		 */
 		JLabel midLabel = new JLabel(str);
 		midLabel.setForeground(Color.white);
 		midLabel.setHorizontalAlignment(SwingConstants.CENTER);

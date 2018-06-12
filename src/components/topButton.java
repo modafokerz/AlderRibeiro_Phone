@@ -1,5 +1,5 @@
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone 602_F FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 11 juin 2018
 * Date de modification : /
@@ -18,10 +18,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+@SuppressWarnings("serial")
 public class topButton extends JButton {
+	/**
+	 * Bouton de la partie du haut de toutes nos applications qu'on trouve à gauche ou à droite des fenêtres
+	 * permet de donner l'affichage souhaité à tous ces boutons.
+	 * @author Nelson
+	 */
+	
 	private String path;
 
 	public topButton(String str) {
+		/**
+		 * Constructeur de la classe qui construit les composants
+		 * @param String qui indique le path de l'image ou icone à afficher sur le bouton.
+		 */
 		path = str;
 
 		setPreferredSize(new Dimension(100,70));

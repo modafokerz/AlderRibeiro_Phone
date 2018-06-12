@@ -1,6 +1,6 @@
 package components;
 /*
-* Exercice FIG HES-SO (Sierre)
+* Smartphone FIG HES-SO (Sierre)
 * Auteur : Nelson Ribeiro Teixeira
 * Date de création : 30 avr. 2018
 * Date de modification : /
@@ -15,7 +15,10 @@ import com.sun.jna.Structure;
 import com.sun.jna.win32.StdCallLibrary;
 
 public interface Kernel32 extends StdCallLibrary {
-
+	/**
+	 * Classe importée, libraire permettant d'avoir accès aux informations de la batterie et autres.
+	 * @author http://msdn2.microsoft.com/en-us/library/aa373232.aspx
+	 */
     public Kernel32 INSTANCE = (Kernel32) Native.loadLibrary("Kernel32", Kernel32.class);
 
     /**

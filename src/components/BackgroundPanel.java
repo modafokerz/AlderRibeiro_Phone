@@ -30,7 +30,6 @@ public class BackgroundPanel extends JPanel{
 		/**
 		 * Constructeur qui transmet à la classe le chemin d'accès à l'image à mettre en fond d'écran.
 		 * @param chemin d'accès à l'image sous forme de string.
-		 * @author Nelson
 		 */
 		this.str = str;
 	}
@@ -39,7 +38,6 @@ public class BackgroundPanel extends JPanel{
 		/**
 		 * Constructeur qui transmet à la classe le chemin d'accès à l'image à mettre en fond d'écran.
 		 * @param chemin d'accès à l'image sous forme de string.
-		 * @author Nelson
 		 */
 		this.str = str;
 		this.width = width;
@@ -50,7 +48,6 @@ public class BackgroundPanel extends JPanel{
 		/**
 		 * Constructeur qui prend l'image à mettre en fond d'écran.
 		 * @param image à mettre en fond.
-		 * @author Nelson
 		 */
 		imgPanel = img;
 	}
@@ -60,8 +57,6 @@ public class BackgroundPanel extends JPanel{
 	public void paintComponent(Graphics g) {
 		/**
 		 * Méthode de la classe JPanel redéfinie pour qu'elle mette en fond l'image désirée.
-		 * @author Nelson
-		 * @param élément graphique.
 		 */
 		if(width==0 || height == 0) {
 			width = this.getWidth();

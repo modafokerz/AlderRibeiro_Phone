@@ -33,7 +33,6 @@ public class HPButton extends JButton {
 	public HPButton(String str) {
 		/**
 		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
-		 * @author Nelson
 		 * @param string représentant le nom à donner au bouton.
 		 */
 		super(str);
@@ -42,7 +41,6 @@ public class HPButton extends JButton {
 	public HPButton(boolean isLockButton) {
 		/**
 		 * constructeur qui appelle la méthode construction à l'instanciation du composant et qui attribue l'image lock-icon.png au bouton.
-		 * @author Nelson
 		 * @param boolean permettant de savoir si c'est un lockbutton ou non
 		 */
 		construction();
@@ -63,7 +61,9 @@ public class HPButton extends JButton {
 	
 	
 	private void construction() {
-		
+		/**
+		 * Méthode qui construit le boutton dans la forme désirée.
+		 */
 		
 		
 		
