@@ -62,7 +62,7 @@ public class GalleryScreen extends AppBaseFrame {
 	private	topButton addPic = new topButton("img/icons/add_icon.png");
 
 	public GalleryScreen() {
-		remove(centerPanel);
+		
 
 		// construction de la Frame
 		construction();
@@ -149,6 +149,7 @@ public class GalleryScreen extends AppBaseFrame {
 
 
 	private void construction() {
+		remove(centerPanel);
 		baseConstruction();
 
 
