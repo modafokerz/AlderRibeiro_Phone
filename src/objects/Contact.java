@@ -45,7 +45,7 @@ public class Contact implements Serializable{
 	 * Cette classe est utilisée lors de la modification
 	 * d'un contact dans la classe ContactEdition.
 	 * 
-	 * @see ContactEdition
+	 * see ContactEdition
 	 * 
 	 * 
 	 * @param photoPath	le chemin d'accès à la photo
@@ -89,7 +89,7 @@ public class Contact implements Serializable{
 	 * 
 	 * Est appelée lors de la création d'un nouveau contact
 	 * 
-	 * @see ContactEdition
+	 * see ContactEdition
 	 */
 	public Contact() {
 		this("", "", "0000000000", "", "");

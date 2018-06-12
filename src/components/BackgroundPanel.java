@@ -18,7 +18,6 @@ public class BackgroundPanel extends JPanel{
 	/**
 	 * classe héritant de JPanel permettant l'instantiation d'un panel avec une image peinte en fond d'écran.
 	 * @author Nelson
-	 * @param string qui définit le path pour aller chercher l'image à mettre en fond d'écran.
 	 */
 	private String str;
 	private int width;
@@ -38,6 +37,8 @@ public class BackgroundPanel extends JPanel{
 		/**
 		 * Constructeur qui transmet à la classe le chemin d'accès à l'image à mettre en fond d'écran.
 		 * @param chemin d'accès à l'image sous forme de string.
+		 * @param int pour la largeur de l'image a afficher
+		 * @param int height pour la hauteur de l'image a afficher.
 		 */
 		this.str = str;
 		this.width = width;

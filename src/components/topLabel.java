@@ -21,7 +21,9 @@ public class topLabel extends JLabel {
 	public topLabel(String str) {
 		/**
 		 * Construction du composant à l'instanciation
-		 * @param String ou message a afficher sur le JLabel
+		 * 
+		 * @param str    message a afficher sur le JLabel
+		 * 
 		 */
 		super(str);
 		setPreferredSize(new Dimension(350,100));

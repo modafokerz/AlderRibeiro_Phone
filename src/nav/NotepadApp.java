@@ -184,8 +184,8 @@ public class NotepadApp extends AppBaseFrame {
 	 * 
 	 * @return	L'entier du texte dans le fichier ".txt"
 	 * 
-	 * @throws IOException	si une erreur de lecture/écriture est survenue
-	 * @throws FileNotFoundException	Si le fichier désiré n'est pas trouvable
+	 * throws IOException	si une erreur de lecture/écriture est survenue
+	 * throws FileNotFoundException	Si le fichier désiré n'est pas trouvable
 	 */
 	private String getText() {
 		String retVal = "";
@@ -221,7 +221,7 @@ public class NotepadApp extends AppBaseFrame {
 	 * Utilise un scanner pour lire ligne par ligne et insérer
 	 * correctement dans le ".txt".
 	 * 
-	 * @throws IOException si une erreur de lecture/écriture est survenue
+	 * throws IOException si une erreur de lecture/écriture est survenue
 	 */
 	private void saveText() {
 		filePath = new File("Notes/" + noteTitle.getText() + ".txt");

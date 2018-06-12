@@ -189,7 +189,7 @@ public class NotepadSelection extends AppBaseFrame {
 		 * prend en paramètre le chemin de l'icône nécessaire.
 		 * 
 		 * @param str	le chemin d'accès à l'icône
-		 * @throws IOException	si une erreur de lecture/ecriture est survenue
+		 * throws IOException	si une erreur de lecture/ecriture est survenue
 		 */
 		public TopButton(String str) {
 			path = str;
@@ -227,9 +227,14 @@ public class NotepadSelection extends AppBaseFrame {
 		 * 
 		 * Ajoute au bouton un label avec le titre de la note.
 		 * 
-		 * @param str	le nom de la note
 		 */
 		public NoteButton(File file) {
+			/**
+			 * Constructeur de la classe
+			 * 
+			 * @param file      fichier dont on veut le nom pour l'afficher.
+			 * 
+			 */
 			super(file.getName());
 
 			this.setPreferredSize(new Dimension(530,80));

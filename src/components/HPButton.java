@@ -33,7 +33,9 @@ public class HPButton extends JButton {
 	public HPButton(String str) {
 		/**
 		 * constructeur qui appelle la méthode construction à l'instanciation du composant.
-		 * @param string représentant le nom à donner au bouton.
+		 * 
+		 * @param str      représentant le nom à donner au bouton.
+		 * 
 		 */
 		super(str);
 		construction();

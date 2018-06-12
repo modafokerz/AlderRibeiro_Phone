@@ -97,8 +97,8 @@ public class ContactEdition extends AppBaseFrame {
 	 * 
 	 * @param contact	Le contact à afficher
 	 * 
-	 * @throws IOException	Si une erreur de lecture/écriture est survenue
-	 * @throws ParseException	Si une erreur lors de l'analyse du masque est détectée
+	 * throws IOException	Si une erreur de lecture/écriture est survenue
+	 * throws ParseException	Si une erreur lors de l'analyse du masque est détectée
 	 */
 	public ContactEdition(Contact contact) {
 		super();

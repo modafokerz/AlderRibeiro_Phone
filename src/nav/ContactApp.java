@@ -245,7 +245,7 @@ public class ContactApp extends AppBaseFrame {
 	 * Sérialisation des contacts
 	 * Les contacts sont enregistrés dans "saves/contacts.ser"
 	 * 
-	 * @throws IOException	si une erreur d'écriture/lecture est survenue.
+	 * throws IOException	si une erreur d'écriture/lecture est survenue.
 	 */
 	private void serializeObject() 
 	{
@@ -267,9 +267,9 @@ public class ContactApp extends AppBaseFrame {
 	 * Deserialisation des contacts
 	 * Les contacts sont récupérés de "saves/contacts.ser"
 	 * 
-	 * @throws IOException	Si une erreur de lecture/écriture est survenue,
+	 * throws IOException	Si une erreur de lecture/écriture est survenue,
 	 * 						Crée une liste de contact vide
-	 * @throws ClassNotFoundException	si la classe n'est pas trouvée
+	 * throws ClassNotFoundException	si la classe n'est pas trouvée
 	 * 									Crée une liste de contact vide
 	 */
 	@SuppressWarnings("unchecked")
@@ -397,7 +397,7 @@ public class ContactApp extends AppBaseFrame {
 		 * prend en paramètre le chemin de l'icône nécessaire.
 		 * 
 		 * @param str	le chemin d'accès à l'icône
-		 * @throws IOException	si une erreur de lecture/ecriture est survenue
+		 * throws IOException	si une erreur de lecture/ecriture est survenue
 		 */
 		public TopButton(String str) {
 			path = str;
@@ -437,7 +437,7 @@ public class ContactApp extends AppBaseFrame {
 		 * 
 		 * @param str	le nom et le prénom du contact
 		 * 
-		 * @throws IOException	si une erreur de lecture/ecriture est survenue
+		 * throws IOException	si une erreur de lecture/ecriture est survenue
 		 */
 		public ContactButton(String str) {
 			JLabel lNom = new JLabel(str);
